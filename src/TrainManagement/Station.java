@@ -69,7 +69,7 @@ public class Station extends Agent {
                     for(int i=0;i<top;i++){
                         if(track[i] == track[top] && dateDiff(time[top],time[i])<=1200){
                             flag = true;
-                            break;
+                            mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
                     }
                     if(flag)
