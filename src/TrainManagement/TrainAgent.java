@@ -1,11 +1,10 @@
 /*
+Arguments to create a TrainAgent
 Name
 track
 dir
-x,y
-speed
+station
 time
-
 */
 package TrainManagement;
 
