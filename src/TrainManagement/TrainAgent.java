@@ -16,18 +16,42 @@ import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 //import jade.core.behaviours.WakerBehaviour;
 import java.util.Scanner;
+import java.io.*;
 
 public class TrainAgent extends Agent {
+    
     String Msg;
     Scanner in = new Scanner(System.in);
+    static int count = 0;
+    
     protected void setup() {
         // receiving messages from First
         ACLMessage msg=new ACLMessage(ACLMessage.REQUEST);
-        Object[] args = getArguments();
-        String abc = args[0].toString()+","+args[1].toString()+","+args[2].toString()+","+args[4].toString();
+        //Object[] args = getArguments();
+        String args[]=null;
+        
+        try{
+            File dir = new File(".");
+            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset.txt");		
+            FileInputStream fis = new FileInputStream(fin);
+            //Construct BufferedReader from InputStreamReader
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            int i=0;
+            
+            while ((line = br.readLine()) != null && i<=count) {
+                System.out.println(line);
+                args = line.split(",");
+                i++;
+            }
+        }catch(IOException e){
+            System.out.println("Train Agent cannot be created!! "+e);
+        }
+        String abc = args[0]+","+args[1]+","+args[2]+","+args[4];
+        count++;
         //System.out.println(abc);
         msg.setContent(abc);
-        msg.addReceiver(new AID(args[3].toString(),AID.ISLOCALNAME));
+        msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
         send(msg);
     
         addBehaviour(new CyclicBehaviour(this) {
