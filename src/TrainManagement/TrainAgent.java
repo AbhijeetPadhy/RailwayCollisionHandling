@@ -29,7 +29,7 @@ public class TrainAgent extends Agent {
     String stationTo;
     String time;
     String coordinates;
-    
+   
     String Msg;
     Scanner in = new Scanner(System.in);
     static int count = 0;
