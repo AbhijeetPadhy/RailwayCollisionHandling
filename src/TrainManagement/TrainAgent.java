@@ -71,13 +71,13 @@ public class TrainAgent extends Agent {
         msg.clearAllReceiver();
         abc = args[0]+","+args[1]+","+2+","+args[4]+","+args[5];
         msg.setContent(abc);
-        msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
+        msg.addReceiver(new AID(args[2],AID.ISLOCALNAME));
         send(msg);
         
         msg.clearAllReceiver();
         abc = args[0]+","+args[1]+","+1+","+args[4]+","+args[5];
         msg.setContent(abc);
-        msg.addReceiver(new AID(args[4],AID.ISLOCALNAME));
+        msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
         send(msg);
     
         addBehaviour(new CyclicBehaviour(this) {
