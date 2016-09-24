@@ -48,7 +48,7 @@ public class TrainAgent extends Agent {
             int i=0;
             
             while ((line = br.readLine()) != null && i<=count) {
-                System.out.println(line);
+                //System.out.println(line);
                 args = line.split(",");
                 i++;
             }
