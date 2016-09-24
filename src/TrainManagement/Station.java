@@ -24,6 +24,9 @@ public class Station extends Agent {
         String coordinates;
         
     protected void setup() {
+        Object[] args = getArguments();
+        coordinates = args[0].toString();
+        System.out.println("Station "+getAID().getLocalName()+" started at coordinates "+coordinates+"...");
         
         addBehaviour(new CyclicBehaviour(this) {
             MessageTemplate mt=MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
@@ -50,8 +53,6 @@ public class Station extends Agent {
             
             @Override
             public void action() {
-                Object[] args = getArguments();
-                coordinates = args[0].toString();
                 
                 ACLMessage msg=receive(mt);
                 mt1.clearAllReceiver();
