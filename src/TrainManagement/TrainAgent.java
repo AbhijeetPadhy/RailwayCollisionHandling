@@ -5,6 +5,7 @@ track
 dir
 station
 time
+coordinates
 */
 package TrainManagement;
 
@@ -25,6 +26,8 @@ public class TrainAgent extends Agent {
     int dir;
     String stationFrom;
     String time;
+    String coordinates;
+    
     String Msg;
     Scanner in = new Scanner(System.in);
     static int count = 0;
@@ -57,8 +60,9 @@ public class TrainAgent extends Agent {
         dir = Integer.parseInt(args[2]);
         stationFrom = args[3];
         time = args[4];
+        coordinates = args[5];
         
-        String abc = args[0]+","+args[1]+","+args[2]+","+args[4];
+        String abc = args[0]+","+args[1]+","+args[2]+","+args[4]+","+args[5];
         count++;
         //System.out.println(abc);
         msg.setContent(abc);

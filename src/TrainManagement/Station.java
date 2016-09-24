@@ -19,6 +19,7 @@ public class Station extends Agent {
         int track[] = new int[10];
         int dir[] = new int[10];
         String time[] = new String[10];
+        String trainCoordinates[] = new String[10];
         int top = -1;
         
         String coordinates;
@@ -71,16 +72,19 @@ public class Station extends Agent {
                     String title = msg.getContent();
                     AID sen= msg.getSender();
                     String arr[] = title.split(",");
-                    System.out.println("Train: " +arr[0]);
-                    System.out.println("Track: "+arr[1]);
-                    System.out.println("Direc: " +arr[2]);
-                    System.out.println("Time: " +arr[3]);
+                    System.out.println("Train\t\t:" +arr[0]);
+                    System.out.println("Track\t\t:"+arr[1]);
+                    System.out.println("Direc\t\t:" +arr[2]);
+                    System.out.println("Time\t\t:" +arr[3]);
+                    System.out.println("Coordinates\t:"+arr[4]);
                     
                     ++top;
                     Name[top] = arr[0];
                     track[top] = Integer.parseInt(arr[1]);
                     dir[top] = Integer.parseInt(arr[2]);
                     time[top] = arr[3];
+                    trainCoordinates[top] = arr[4];
+                    
                     boolean flag = false;
                     for(int i=0;i<top;i++){
                         if(track[i] == track[top] && dateDiff(time[top],time[i])<=1200){
