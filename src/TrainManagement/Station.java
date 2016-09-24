@@ -20,7 +20,9 @@ public class Station extends Agent {
         int dir[] = new int[10];
         String time[] = new String[10];
         int top = -1;
-    
+        
+        String coordinates;
+        
     protected void setup() {
         
         addBehaviour(new CyclicBehaviour(this) {
@@ -48,6 +50,9 @@ public class Station extends Agent {
             
             @Override
             public void action() {
+                Object[] args = getArguments();
+                coordinates = args[0].toString();
+                
                 ACLMessage msg=receive(mt);
                 mt1.clearAllReceiver();
                 if (msg != null) {
