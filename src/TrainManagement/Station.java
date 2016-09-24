@@ -40,7 +40,9 @@ public class Station extends Agent {
                 double bX = Double.parseDouble(b.split(":")[0]);
                 double bY = Double.parseDouble(b.split(":")[1]);
                 
-                return Math.sqrt((bX-aX)*(bX-aX)+(bY-aY)*(bY-aY));
+                double dis = Math.sqrt((bX-aX)*(bX-aX)+(bY-aY)*(bY-aY));
+                                
+                return dis;
             }
             
             public int dateDiff(String a, String b){
@@ -87,7 +89,7 @@ public class Station extends Agent {
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
-                        if(track[i] == track[top] && dateDiff(time[top],time[i])<=1200){
+                        if(track[i] == track[top] && dateDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],trainCoordinates[i])<20){
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
