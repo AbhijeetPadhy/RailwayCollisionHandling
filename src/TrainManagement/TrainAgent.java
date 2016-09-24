@@ -2,8 +2,9 @@
 Arguments to create a TrainAgent
 name
 track
-dir
-station
+//dir
+station from
+station to
 time
 coordinates
 */
@@ -23,8 +24,9 @@ public class TrainAgent extends Agent {
     
     String name;
     int track;
-    int dir;
+    //int dir;
     String stationFrom;
+    String stationTo;
     String time;
     String coordinates;
     
@@ -57,16 +59,25 @@ public class TrainAgent extends Agent {
         }
         name = args[0];
         track = Integer.parseInt(args[1]);
-        dir = Integer.parseInt(args[2]);
-        stationFrom = args[3];
+        //dir = Integer.parseInt(args[2]);
+        stationFrom = args[2];
+        stationTo = args[3];
         time = args[4];
         coordinates = args[5];
         
-        String abc = args[0]+","+args[1]+","+args[2]+","+args[4]+","+args[5];
         count++;
-        //System.out.println(abc);
+        String abc;
+        
+        msg.clearAllReceiver();
+        abc = args[0]+","+args[1]+","+2+","+args[4]+","+args[5];
         msg.setContent(abc);
         msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
+        send(msg);
+        
+        msg.clearAllReceiver();
+        abc = args[0]+","+args[1]+","+1+","+args[4]+","+args[5];
+        msg.setContent(abc);
+        msg.addReceiver(new AID(args[4],AID.ISLOCALNAME));
         send(msg);
     
         addBehaviour(new CyclicBehaviour(this) {
@@ -80,8 +91,9 @@ public class TrainAgent extends Agent {
                 if(msg1!=null) {
                     msg1.clearAllReceiver();
                     Msg=msg1.getContent();
+                    AID sen= msg1.getSender();
                     
-                   System.out.println(getAID().getLocalName()+": "+Msg);
+                   System.out.println(getAID().getLocalName()+": Message received from station "+sen.getLocalName()+"\n\t"+Msg);
                     
                 }else{
                     //System.out.println("No got!!");
