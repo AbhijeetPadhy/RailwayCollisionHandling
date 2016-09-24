@@ -1,6 +1,6 @@
 /*
 Arguments to create a TrainAgent
-Name
+name
 track
 dir
 station
@@ -20,6 +20,11 @@ import java.io.*;
 
 public class TrainAgent extends Agent {
     
+    String name;
+    int track;
+    int dir;
+    String stationFrom;
+    String time;
     String Msg;
     Scanner in = new Scanner(System.in);
     static int count = 0;
@@ -47,6 +52,12 @@ public class TrainAgent extends Agent {
         }catch(IOException e){
             System.out.println("Train Agent cannot be created!! "+e);
         }
+        name = args[0];
+        track = Integer.parseInt(args[1]);
+        dir = Integer.parseInt(args[2]);
+        stationFrom = args[3];
+        time = args[4];
+        
         String abc = args[0]+","+args[1]+","+args[2]+","+args[4];
         count++;
         //System.out.println(abc);
