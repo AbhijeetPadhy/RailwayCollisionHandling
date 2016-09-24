@@ -32,6 +32,16 @@ public class Station extends Agent {
             MessageTemplate mt=MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
             ACLMessage mt1=new ACLMessage(ACLMessage.INFORM);
             
+            public double distance(String a, String b){
+                double aX = Double.parseDouble(a.split(":")[0]);
+                double aY = Double.parseDouble(a.split(":")[1]);
+                
+                double bX = Double.parseDouble(b.split(":")[0]);
+                double bY = Double.parseDouble(b.split(":")[1]);
+                
+                return Math.sqrt((bX-aX)*(bX-aX)+(bY-aY)*(bY-aY));
+            }
+            
             public int dateDiff(String a, String b){
                 String aA[] = a.split(":");
                 int aH = Integer.parseInt(aA[0]);
