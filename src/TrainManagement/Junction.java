@@ -20,6 +20,7 @@ public class Junction extends Agent {
         int dir[] = new int[10];
         String time[] = new String[10];
         String trainCoordinates[] = new String[10];
+        double velocity[] = new double[10];
         int top = -1;
         
         String coordinates;
@@ -74,12 +75,13 @@ public class Junction extends Agent {
                     String title = msg.getContent();
                     AID sen= msg.getSender();
                     String arr[] = title.split(",");
-                    System.out.println("Junction "+getAID().getLocalName()+":");
+                    System.out.println("\nJunction "+getAID().getLocalName()+":");
                     System.out.println("Train\t\t:" +arr[0]);
                     System.out.println("Track\t\t:"+arr[1]);
                     System.out.println("Direc\t\t:" +arr[2]);
                     System.out.println("Time\t\t:" +arr[3]);
                     System.out.println("Coordinates\t:"+arr[4]);
+                    System.out.println("Velocity \t:"+arr[5]);
                     
                     ++top;
                     Name[top] = arr[0];
@@ -87,6 +89,7 @@ public class Junction extends Agent {
                     dir[top] = Integer.parseInt(arr[2]);
                     time[top] = arr[3];
                     trainCoordinates[top] = arr[4];
+                    velocity[top] = Double.parseDouble(arr[5]);
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){

@@ -74,12 +74,13 @@ public class Station extends Agent {
                     String title = msg.getContent();
                     AID sen= msg.getSender();
                     String arr[] = title.split(",");
-                    System.out.println("Station "+getAID().getLocalName()+":");
+                    System.out.println("\nStation "+getAID().getLocalName()+":");
                     System.out.println("Train\t\t:" +arr[0]);
                     System.out.println("Track\t\t:"+arr[1]);
                     System.out.println("Direc\t\t:" +arr[2]);
                     System.out.println("Time\t\t:" +arr[3]);
                     System.out.println("Coordinates\t:"+arr[4]);
+                    System.out.println("Velocity \t:"+arr[5]);
                     
                     ++top;
                     Name[top] = arr[0];

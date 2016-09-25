@@ -29,6 +29,7 @@ public class TrainAgent extends Agent {
     String stationTo;
     String time;
     String coordinates;
+    double velocity;
    
     String Msg;
     Scanner in = new Scanner(System.in);
@@ -42,7 +43,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset1.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -64,18 +65,19 @@ public class TrainAgent extends Agent {
         stationTo = args[3];
         time = args[4];
         coordinates = args[5];
+        velocity = Double.parseDouble(args[6]);
         
         count++;
         String abc;
         
         msg.clearAllReceiver();
-        abc = args[0]+","+args[1]+","+2+","+args[4]+","+args[5];
+        abc = args[0]+","+args[1]+","+2+","+args[4]+","+args[5]+","+args[6];
         msg.setContent(abc);
         msg.addReceiver(new AID(args[2],AID.ISLOCALNAME));
         send(msg);
         
         msg.clearAllReceiver();
-        abc = args[0]+","+args[1]+","+1+","+args[4]+","+args[5];
+        abc = args[0]+","+args[1]+","+1+","+args[4]+","+args[5]+","+args[6];
         msg.setContent(abc);
         msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
         send(msg);
