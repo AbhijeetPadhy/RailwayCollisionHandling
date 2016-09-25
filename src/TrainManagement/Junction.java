@@ -59,10 +59,7 @@ public class Junction extends Agent {
                 
                 int diff = (aH-bH)*60*60 + (aM-bM)*60 + (aS-bS);
                 
-                if(diff>0)
-                    return diff;
-                else
-                    return diff*-1;
+                return diff;
             }
             
             @Override
@@ -93,7 +90,15 @@ public class Junction extends Agent {
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
-                        if(track[i] == track[top] && dateDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],trainCoordinates[i])<20){
+                        double TDiff = dateDiff(time[top],time[i]);
+                        double C1 = distance(trainCoordinates[top],coordinates)/velocity[top];
+                        double C2 = distance(trainCoordinates[i],coordinates)/velocity[i];
+                        double CDiff = C1-C2;
+                        if(track[i] == track[top] && Math.abs(TDiff)<=1200 && distance(trainCoordinates[top],coordinates)<20 && distance(trainCoordinates[i],coordinates)<20){
+                            flag = true;
+                            mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                        }
+                        else if(track[i] != track[top] && Math.abs(CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<200 && distance(trainCoordinates[i],coordinates)<200){
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
