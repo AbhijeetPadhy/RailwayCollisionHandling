@@ -144,7 +144,7 @@ public class Station extends Agent {
                     mt1.addReceiver(sen);
                     send(mt1);
                     
-                    System.out.println("----------Collisions detected by stations: "+(headon+rear)+" ----------");
+                    System.out.println("----------Collisions detected by stations: headon="+headon+" rear="+rear+" ----------");
                     
                 }else {
                    // block();
