@@ -20,6 +20,7 @@ public class Station extends Agent {
         int dir[] = new int[10];
         String time[] = new String[10];
         String trainCoordinates[] = new String[10];
+        double velocity[] = new double[10];
         int top = -1;
         
         String coordinates;
@@ -91,6 +92,7 @@ public class Station extends Agent {
                     dir[top] = Integer.parseInt(arr[2]);
                     time[top] = arr[3];
                     trainCoordinates[top] = arr[4];
+                    velocity[top] = Double.parseDouble(arr[5]);
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
