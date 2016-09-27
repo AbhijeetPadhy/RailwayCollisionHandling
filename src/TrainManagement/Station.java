@@ -21,6 +21,9 @@ public class Station extends Agent {
         String time[] = new String[10];
         String trainCoordinates[] = new String[10];
         double velocity[] = new double[10];
+        String source[] = new String[10];
+        String dest[] = new String[10];
+        
         int top = -1;
         
         String coordinates;
@@ -68,6 +71,16 @@ public class Station extends Agent {
                     return diff*-1;
             }
             
+            boolean isHeadOn(int a,int b){
+                if((dir[a] == 0 && dir[b]!=0)||(dir[a] != 0 && dir[b]==0))
+                    return true;
+                if(dir[a]!=dir[b] && source[a].equals(dest[b]) && dest[a].equals(source[b]))
+                    return true;
+                if(dir[a]==dir[b] && dest[a].equals(dest[b]) && !source[a].equals(source[b]))
+                    return true;
+                return false;
+            }
+            
             @Override
             public void action() {
                 
@@ -85,6 +98,8 @@ public class Station extends Agent {
                     System.out.println("Time\t\t:" +arr[3]);
                     System.out.println("Coordinates\t:"+arr[4]);
                     System.out.println("Velocity \t:"+arr[5]);
+                    System.out.println("Source \t:"+arr[6]);
+                    System.out.println("Destination \t:"+arr[7]);
                     
                     ++top;
                     Name[top] = arr[0];
@@ -93,25 +108,23 @@ public class Station extends Agent {
                     time[top] = arr[3];
                     trainCoordinates[top] = arr[4];
                     velocity[top] = Double.parseDouble(arr[5]);
+                    source[top] = arr[6];
+                    dest[top] = arr[7];
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
                         if(track[i] == track[top] && timeDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],coordinates)<200 && distance(trainCoordinates[i],coordinates)<200){
-                            if(dir[i] != dir[top]){
+                            if(dir[i]==0 && dir[top]==0)
+                                ;
+                            else if( isHeadOn(i,top) ){
                                 flag = true;
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                 headon++;
                             }
-                            /*we check here that both trains are not standing.
-                                Here we just see if velocity of one train is not 0 
-                                since if velocity of one train is 0, velocity of other 
-                                train has to be 0 since both are having same dir. 
-                                So if one train is standing, the other train will also 
-                                stand. We dont need to check collision in such a case.
-                            */
-                            else if(dir[i] != 0){ 
-                                int first,second;
-                                if(dir[i] == 1){
+                            
+                            else{
+                                int first=-1,second=-1;
+                                if(source[i].equals(source[top])){
                                     if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
                                         first = i;
                                         second = top;
@@ -120,7 +133,7 @@ public class Station extends Agent {
                                         second = i;
                                     }
                                 }
-                                else{
+                                else if(dest[i].equals(dest[top])){
                                     if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
                                         first = top;
                                         second = i;
@@ -129,7 +142,15 @@ public class Station extends Agent {
                                         second = top;
                                     }
                                 }
-                                if(velocity[first]<velocity[second]){
+                                else if(source[i].equals(dest[top])){
+                                    first = i;
+                                    second = top;
+                                }
+                                else if(dest[i].equals(source[top])){
+                                    first = top;
+                                    second = i;
+                                }
+                                if(first!=-1 && second!=-1 && velocity[first]<velocity[second]){
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                     rear++;
