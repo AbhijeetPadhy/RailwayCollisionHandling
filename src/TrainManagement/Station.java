@@ -24,7 +24,8 @@ public class Station extends Agent {
         
         String coordinates;
         
-        static int collisions=0;
+        static int headon=0;
+        static int rear=0;
         
     protected void setup() {
         Object[] args = getArguments();
@@ -93,21 +94,22 @@ public class Station extends Agent {
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
-                        if(track[i] == track[top] && timeDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],trainCoordinates[i])<20){
-                            flag = true;
-                            mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                        if(track[i] == track[top] && timeDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],coordinates)<200 && distance(trainCoordinates[i],coordinates)<200){
+                            if(dir[i] != dir[top]){
+                                flag = true;
+                                mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                                headon++;
+                            }
                         }
                     }
-                    if(flag){
+                    if(flag)
                         mt1.setContent("You are going to collide!!!");
-                        collisions++;
-                    }
                     else
                         mt1.setContent("You are safe!!!");
                     mt1.addReceiver(sen);
                     send(mt1);
                     
-                    System.out.println("----------Collisions detected by stations: "+collisions+" ----------");
+                    System.out.println("----------Collisions detected by stations: "+(headon+rear)+" ----------");
                     
                 }else {
                    // block();
