@@ -48,7 +48,7 @@ public class Junction extends Agent {
                 return dis;
             }
             
-            public int dateDiff(String a, String b){
+            public int timeDiff(String a, String b){
                 String aA[] = a.split(":");
                 int aH = Integer.parseInt(aA[0]);
                 int aM = Integer.parseInt(aA[1]);
@@ -92,7 +92,7 @@ public class Junction extends Agent {
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
-                        double TDiff = dateDiff(time[top],time[i]);
+                        double TDiff = timeDiff(time[top],time[i]);
                         double C1 = distance(trainCoordinates[top],coordinates)/velocity[top];
                         double C2 = distance(trainCoordinates[i],coordinates)/velocity[i];
                         double CDiff = C1-C2;

@@ -47,7 +47,7 @@ public class Station extends Agent {
                 return dis;
             }
             
-            public int dateDiff(String a, String b){
+            public int timeDiff(String a, String b){
                 String aA[] = a.split(":");
                 int aH = Integer.parseInt(aA[0]);
                 int aM = Integer.parseInt(aA[1]);
@@ -93,7 +93,7 @@ public class Station extends Agent {
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
-                        if(track[i] == track[top] && dateDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],trainCoordinates[i])<20){
+                        if(track[i] == track[top] && timeDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],trainCoordinates[i])<20){
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
