@@ -102,6 +102,39 @@ public class Station extends Agent {
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                 headon++;
                             }
+                            /*we check here that both trains are not standing.
+                                Here we just see if velocity of one train is not 0 
+                                since if velocity of one train is 0, velocity of other 
+                                train has to be 0 since both are having same dir. 
+                                So if one train is standing, the other train will also 
+                                stand. We dont need to check collision in such a case.
+                            */
+                            else if(dir[i] != 0){ 
+                                int first,second;
+                                if(dir[i] == 1){
+                                    if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
+                                        first = i;
+                                        second = top;
+                                    }else{
+                                        first = top;
+                                        second = i;
+                                    }
+                                }
+                                else{
+                                    if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
+                                        first = top;
+                                        second = i;
+                                    }else{
+                                        first = i;
+                                        second = top;
+                                    }
+                                }
+                                if(velocity[first]<velocity[second]){
+                                    flag = true;
+                                    mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                                    rear++;
+                                }
+                            }
                         }
                     }
                     if(flag)
