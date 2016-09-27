@@ -24,6 +24,8 @@ public class Station extends Agent {
         
         String coordinates;
         
+        static int collisions=0;
+        
     protected void setup() {
         Object[] args = getArguments();
         coordinates = args[0].toString();
@@ -96,12 +98,16 @@ public class Station extends Agent {
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
                     }
-                    if(flag)
+                    if(flag){
                         mt1.setContent("You are going to collide!!!");
+                        collisions++;
+                    }
                     else
                         mt1.setContent("You are safe!!!");
                     mt1.addReceiver(sen);
                     send(mt1);
+                    
+                    System.out.println("----------Collisions detected by stations: "+collisions+" ----------");
                     
                 }else {
                    // block();
