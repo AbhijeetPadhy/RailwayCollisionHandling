@@ -10,6 +10,10 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.core.AID;
 import TrainManagement.TrainAgent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -71,6 +75,13 @@ public class Station extends Agent {
                     return diff*-1;
             }
             
+            void writeToFile() throws IOException{
+                try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
+                    String str = "Number of headon collisions: "+headon+"\nNumber of rear collisions: "+rear;
+                    fos.write(str.getBytes());
+                }
+            }
+            
             boolean isHeadOn(int a,int b){
                 if((dir[a] == 0 && dir[b]!=0)||(dir[a] != 0 && dir[b]==0))
                     return true;
@@ -83,7 +94,7 @@ public class Station extends Agent {
             
             @Override
             public void action() {
-                
+
                 ACLMessage msg=receive(mt);
                 mt1.clearAllReceiver();
                 if (msg != null) {
@@ -125,12 +136,25 @@ public class Station extends Agent {
                             else{
                                 int first=-1,second=-1;
                                 if(source[i].equals(source[top])){
+                                    System.out.println(distance(trainCoordinates[i],coordinates)+"......"+distance(trainCoordinates[top],coordinates));
                                     if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
-                                        first = i;
-                                        second = top;
+                                        if(dir[i] == 1){
+                                            first = i;
+                                            second = top;
+                                        }
+                                        else{
+                                            first = top;
+                                            second = i;
+                                        }
                                     }else{
-                                        first = top;
-                                        second = i;
+                                        if(dir[i] == 1){
+                                            first = top;
+                                            second = i;
+                                        }
+                                        else{
+                                            first = i;
+                                            second = top;
+                                        }
                                     }
                                 }
                                 else if(dest[i].equals(dest[top])){
@@ -158,8 +182,14 @@ public class Station extends Agent {
                             }
                         }
                     }
-                    if(flag)
+                    if(flag){
                         mt1.setContent("You are going to collide!!!");
+                        try {
+                            writeToFile();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     else
                         mt1.setContent("You are safe!!!");
                     mt1.addReceiver(sen);

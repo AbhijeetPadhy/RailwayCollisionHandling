@@ -1,0 +1,2 @@
+Number of headon collisions: 0
+Number of rear collisions: 1
