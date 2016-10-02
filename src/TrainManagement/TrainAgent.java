@@ -24,12 +24,13 @@ public class TrainAgent extends Agent {
     
     String name;
     int track;
-    //int dir;
+    int dir;
     String stationFrom;
     String stationTo;
     String time;
     String coordinates;
     double velocity;
+    String path[];
    
     String Msg;
     Scanner in = new Scanner(System.in);
@@ -43,7 +44,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset2.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset3.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -52,20 +53,37 @@ public class TrainAgent extends Agent {
             
             while ((line = br.readLine()) != null && i<=count) {
                 //System.out.println(line);
-                args = line.split(",");
+                args = line.split(" ");
                 i++;
             }
+            System.out.println(line+"----Length="+args.length);
         }catch(IOException e){
             System.out.println("Train Agent cannot be created!! "+e);
         }
+        
         name = args[0];
-        track = Integer.parseInt(args[1]);
-        //dir = Integer.parseInt(args[2]);
-        stationFrom = args[2];
-        stationTo = args[3];
-        time = args[4];
-        coordinates = args[5];
+        track = Integer.parseInt(args[4]);
+        dir = Integer.parseInt(args[5]);
+        stationTo = args[2];
+        time = args[1];
+        coordinates = args[3];
         velocity = Double.parseDouble(args[6]);
+        path = args[8].substring(1,args[8].length()).split(",");
+        
+        int i;
+        if(dir==1){
+            for(i=0; i<path.length;i++){
+                if(path[i].equals(stationTo))
+                    break;
+            }
+            stationFrom = path[i-1];
+        }else{
+            for(i=path.length-1; i>=0;i--){
+                if(path[i].equals(stationTo))
+                    break;
+            }
+            stationFrom = path[i+1];
+        }
         
         count++;
         String abc;
@@ -73,15 +91,15 @@ public class TrainAgent extends Agent {
         msg.clearAllReceiver();
         abc = name+","+track+","+2+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo;
         msg.setContent(abc);
-        msg.addReceiver(new AID(args[2],AID.ISLOCALNAME));
+        msg.addReceiver(new AID(stationFrom,AID.ISLOCALNAME));
         send(msg);
         
         msg.clearAllReceiver();
         abc = name+","+track+","+1+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo;
         msg.setContent(abc);
-        msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
+        msg.addReceiver(new AID(stationTo,AID.ISLOCALNAME));
         send(msg);
-    
+        
         addBehaviour(new CyclicBehaviour(this) {
             
             MessageTemplate mt=MessageTemplate.MatchPerformative(ACLMessage.INFORM);

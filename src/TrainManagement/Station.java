@@ -109,7 +109,7 @@ public class Station extends Agent {
                     System.out.println("Time\t\t:" +arr[3]);
                     System.out.println("Coordinates\t:"+arr[4]);
                     System.out.println("Velocity \t:"+arr[5]);
-                    System.out.println("Source \t:"+arr[6]);
+                    System.out.println("Source \t\t:"+arr[6]);
                     System.out.println("Destination \t:"+arr[7]);
                     
                     ++top;
