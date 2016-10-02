@@ -71,13 +71,13 @@ public class TrainAgent extends Agent {
         String abc;
         
         msg.clearAllReceiver();
-        abc = args[0]+","+args[1]+","+2+","+args[4]+","+args[5]+","+args[6]+","+stationFrom+","+stationTo;
+        abc = name+","+track+","+2+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo;
         msg.setContent(abc);
         msg.addReceiver(new AID(args[2],AID.ISLOCALNAME));
         send(msg);
         
         msg.clearAllReceiver();
-        abc = args[0]+","+args[1]+","+1+","+args[4]+","+args[5]+","+args[6]+","+stationFrom+","+stationTo;
+        abc = name+","+track+","+1+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo;
         msg.setContent(abc);
         msg.addReceiver(new AID(args[3],AID.ISLOCALNAME));
         send(msg);
