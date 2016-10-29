@@ -22,6 +22,7 @@ import java.io.*;
 
 public class TrainAgent extends Agent {
     
+    String Name[] = new String[10];
     String name;
     int track;
     int dir;
@@ -44,7 +45,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset3.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset4.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
