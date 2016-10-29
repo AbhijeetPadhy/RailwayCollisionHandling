@@ -201,7 +201,6 @@ public class Station extends Agent {
                     for(int i=0;i<=top;i++){
                         if(track[i] == Integer.parseInt(arr[1])){
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
-                            if(!Name[i].equals(arr[0]))
                                  str=str+Name[i]+",";
                         } 
                     }

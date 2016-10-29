@@ -41,6 +41,7 @@ public class TrainAgent extends Agent {
     protected void setup() {
         // receiving messages from First
         ACLMessage msg=new ACLMessage(ACLMessage.REQUEST);
+        ACLMessage mt2=new ACLMessage(ACLMessage.INFORM);
         //Object[] args = getArguments();
         String args[]=null;
         
@@ -101,10 +102,42 @@ public class TrainAgent extends Agent {
         msg.setContent(abc);
         msg.addReceiver(new AID(stationTo,AID.ISLOCALNAME));
         send(msg);
-        
+                
         addBehaviour(new CyclicBehaviour(this) {
             
             MessageTemplate mt=MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+            
+            public double distance(String a, String b){
+                double aX = Double.parseDouble(a.split(":")[0]);
+                double aY = Double.parseDouble(a.split(":")[1]);
+                
+                double bX = Double.parseDouble(b.split(":")[0]);
+                double bY = Double.parseDouble(b.split(":")[1]);
+                
+                double dis = Math.sqrt((bX-aX)*(bX-aX)+(bY-aY)*(bY-aY));
+                                
+                return dis;
+            }
+            
+            public int timeDiff(String a, String b){
+                String aA[] = a.split(":");
+                int aH = Integer.parseInt(aA[0]);
+                int aM = Integer.parseInt(aA[1]);
+                int aS = Integer.parseInt(aA[2]);
+                
+                String bA[] = b.split(":");
+                int bH = Integer.parseInt(bA[0]);
+                int bM = Integer.parseInt(bA[1]);
+                int bS = Integer.parseInt(bA[2]);
+                
+                int diff = (aH-bH)*60*60 + (aM-bM)*60 + (aS-bS);
+                
+                if(diff>0)
+                    return diff;
+                else
+                    return diff*-1;
+            }
+            
             @Override
             public void action() {
                 
@@ -112,25 +145,29 @@ public class TrainAgent extends Agent {
                 
                 //if a message has been sent 
                 if(msg1!=null) {
-                    
                     //if the message sent is by Station
                     if(msg1.getSender().getLocalName().charAt(0) == 's'){
                         Msg=msg1.getContent();
                         
                         //if the message sent by the station is about ListOfTrains
                         if(Msg.contains("ListOfTrains")){
-                            System.out.println("I have got the list of trains!! "+Msg);
                             String list[];
-                            list = Msg.split(":")[1].split(",");
-                            for (String list1 : list) {
-                                int j;
-                                for (j=0; j<=top; j++) {
-                                    if (list1.equals(Name[j])) {
-                                        break;
+                            if(Msg.split(":").length != 1){
+                                list = Msg.split(":")[1].split(",");
+                                for (String list1 : list) {
+                                    
+                                    int j;
+                                    if(list1.equals(getAID().getLocalName()))
+                                        continue;
+                                    for (j=0; j<=top; j++) {
+                                        if (list1.equals(Name[j])) {
+                                            break;
+                                        }
                                     }
-                                }
-                                if (j != top+1) {
-                                    Name[++top] = list1;
+                                    if (j == top+1) {
+                                        System.out.println(getAID().getLocalName()+": train added!!!!");
+                                        Name[++top] = list1;
+                                    }
                                 }
                             }
                         }
@@ -145,17 +182,42 @@ public class TrainAgent extends Agent {
                     
                     //message is sent by trains
                     else{
+                        Msg=msg1.getContent();
                         
+                        if(Msg.split(",").length < 2)
+                            System.out.println(getAID().getLocalName()+" : "+Msg);
+                        else{
+                            String n = Msg.split(",")[0];
+                            String t = Msg.split(",")[1];
+                            String c = Msg.split(",")[2];
+                            String sT = Msg.split(",")[3];
+                            String sF = Msg.split(",")[4];
+                            double v = Double.parseDouble(Msg.split(",")[5]);
+
+                            if(timeDiff(t,time)<=1200 && distance(c,coordinates)<200){
+
+                                //headon
+                                if(stationTo.equals(sF)){
+                                    mt2.clearAllReceiver();
+                                    String str = "Headon Collision Detected";
+                                    mt2.setContent(str);
+                                    mt2.addReceiver(msg1.getSender());
+                                    send(mt2);
+                                }
+                                //rear
+                                else{
+                                }
+                            }
+                        }
                     }
                     
                 }else{
-                    for(String train:Name){
-                        msg.clearAllReceiver();
-                        String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
-                        msg.setContent(str);
-                        msg.addReceiver(new AID(train,AID.ISLOCALNAME));
-                        send(msg);
-                    }
+                    mt2.clearAllReceiver();
+                    String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
+                    mt2.setContent(str);
+                    for(int i=0;i<=top;i++)
+                        mt2.addReceiver(new AID(Name[i],AID.ISLOCALNAME));  
+                    send(mt2);
                 }
             }
         });
