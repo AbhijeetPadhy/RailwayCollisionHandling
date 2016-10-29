@@ -197,7 +197,7 @@ public class Station extends Agent {
                     
                     //Broadcast no of trains to each train
                     mt1.clearAllReceiver();
-                    String str="";
+                    String str="ListOfTrains:";
                     for(int i=0;i<=top;i++){
                         if(track[i] == Integer.parseInt(arr[1])){
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
