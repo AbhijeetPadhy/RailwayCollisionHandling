@@ -143,9 +143,19 @@ public class TrainAgent extends Agent {
                         }
                     }
                     
+                    //message is sent by trains
+                    else{
+                        
+                    }
+                    
                 }else{
-                    //System.out.println("No got!!");
-                    //block();
+                    for(String train:Name){
+                        msg.clearAllReceiver();
+                        String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
+                        msg.setContent(str);
+                        msg.addReceiver(new AID(train,AID.ISLOCALNAME));
+                        send(msg);
+                    }
                 }
             }
         });
