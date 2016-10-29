@@ -19,6 +19,8 @@ import jade.core.behaviours.CyclicBehaviour;
 //import jade.core.behaviours.WakerBehaviour;
 import java.util.Scanner;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TrainAgent extends Agent {
     
@@ -34,7 +36,10 @@ public class TrainAgent extends Agent {
     String coordinates;
     double velocity;
     String path[];
-   
+    
+    int headon;
+    int rear;
+    
     String Msg;
     Scanner in = new Scanner(System.in);
     static int count = 0;
@@ -139,6 +144,27 @@ public class TrainAgent extends Agent {
                     return diff*-1;
             }
             
+            void writeToFile() throws IOException{
+                try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
+                    readFromFile();
+                    String str = "headon:"+headon+",rear:"+rear;
+                    fos.write(str.getBytes());
+                }
+            }
+            
+            void readFromFile(){
+                try{  
+                    InputStream fis=new FileInputStream("Result.txt");   
+                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                    String str;
+                    if((str= br.readLine())!=null){
+                        headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
+                        rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
+                        fis.close();
+                    }
+                }catch(Exception e){System.out.println(e);}  
+            }
+            
             @Override
             public void action() {
                 
@@ -193,6 +219,15 @@ public class TrainAgent extends Agent {
                                     System.out.println(getAID().getLocalName()+": "+"Message received from train "+sender);
                                     System.out.println('\t'+Msg);
                                     coll[i]=true;
+                                    if(Msg.contains("Headon")){
+                                        readFromFile();
+                                        headon++;
+                                        try {
+                                            writeToFile();
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
                                     break;
                                 }
                             }
