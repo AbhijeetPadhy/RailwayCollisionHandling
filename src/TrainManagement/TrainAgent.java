@@ -23,6 +23,7 @@ import java.io.*;
 public class TrainAgent extends Agent {
     
     String Name[] = new String[10];
+    int top = -1;
     String name;
     int track;
     int dir;
