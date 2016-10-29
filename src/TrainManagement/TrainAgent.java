@@ -227,7 +227,8 @@ public class TrainAgent extends Agent {
                     String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
                     mt2.setContent(str);
                     for(int i=0;i<=top;i++){
-                        mt2.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                        if(coll[i] == false)
+                            mt2.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                     }
                     send(mt2);
                 }
