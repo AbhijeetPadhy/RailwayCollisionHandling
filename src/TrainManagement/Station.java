@@ -205,6 +205,7 @@ public class Station extends Agent {
                                  str=str+Name[i]+",";
                         } 
                     }
+                    mt1.setContent(str);
                     send(mt1);
                     
                     System.out.println("----------Collisions detected by stations: headon="+headon+" rear="+rear+" ----------");
