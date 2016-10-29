@@ -122,14 +122,16 @@ public class TrainAgent extends Agent {
                             System.out.println("I have got the list of trains!! "+Msg);
                             String list[];
                             list = Msg.split(":")[1].split(",");
-                            for(int i=0;i<list.length;i++){
+                            for (String list1 : list) {
                                 int j;
-                                for(j=0;j<=top;j++){
-                                    if(list[i].equals(Name[j]))
+                                for (j=0; j<=top; j++) {
+                                    if (list1.equals(Name[j])) {
                                         break;
+                                    }
                                 }
-                                if(j == top+1)
-                                    Name[++top] = list[i];
+                                if (j == top+1) {
+                                    Name[++top] = list1;
+                                }
                             }
                         }
                         
