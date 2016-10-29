@@ -69,7 +69,7 @@ public class TrainAgent extends Agent {
         time = args[1];
         coordinates = args[3];
         velocity = Double.parseDouble(args[6]);
-        path = args[8].substring(1,args[8].length()).split(",");
+        path = args[8].substring(1,args[8].length()-1).split(",");
         
         int i;
         if(dir==1){
@@ -109,12 +109,26 @@ public class TrainAgent extends Agent {
                 
                 ACLMessage msg1=receive(mt);
                 
+                //if a message has been sent 
                 if(msg1!=null) {
-                    msg1.clearAllReceiver();
-                    Msg=msg1.getContent();
-                    AID sen= msg1.getSender();
                     
-                   System.out.println(getAID().getLocalName()+": Message received from station "+sen.getLocalName()+"\n\t"+Msg);
+                    //if the message sent is by Station
+                    if(msg1.getSender().getLocalName().charAt(0) == 's'){
+                        Msg=msg1.getContent();
+                        
+                        //if the message sent by the station is about ListOfTrains
+                        if(Msg.contains("ListOfTrains")){
+                            System.out.println("I have got the list of trains!! "+Msg);
+                            
+                        }
+                        
+                        //if it is something else
+                        else{
+                            //msg1.clearAllReceiver(); 
+                            AID sen= msg1.getSender();
+                            System.out.println(getAID().getLocalName()+": Message received from station "+sen.getLocalName()+"\n\t"+Msg);
+                        }
+                    }
                     
                 }else{
                     //System.out.println("No got!!");
