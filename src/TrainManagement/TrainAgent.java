@@ -129,7 +129,7 @@ public class TrainAgent extends Agent {
                                         break;
                                     }
                                 }
-                                if (j == top+1) {
+                                if (j != top+1) {
                                     Name[++top] = list1;
                                 }
                             }
