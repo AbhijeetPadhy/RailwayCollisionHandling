@@ -23,6 +23,7 @@ import java.io.*;
 public class TrainAgent extends Agent {
     
     String Name[] = new String[10];
+    boolean coll[] = new boolean[10];
     int top = -1;
     String name;
     int track;
@@ -167,6 +168,7 @@ public class TrainAgent extends Agent {
                                     if (j == top+1) {
                                         System.out.println(getAID().getLocalName()+": train added!!!!");
                                         Name[++top] = list1;
+                                        coll[top] = false;
                                     }
                                 }
                             }
@@ -184,8 +186,16 @@ public class TrainAgent extends Agent {
                     else{
                         Msg=msg1.getContent();
                         
-                        if(Msg.split(",").length < 2)
-                            System.out.println(getAID().getLocalName()+" : "+Msg);
+                        if(Msg.split(",").length < 2){                          
+                            String sender = msg1.getSender().getLocalName();
+                            for(int i =0;i<=top;i++){
+                                if(sender.equals(Name[i]) && !coll[i]){
+                                    System.out.println(getAID().getLocalName()+" : "+Msg);
+                                    coll[i]=true;
+                                    break;
+                                }
+                            }
+                        }
                         else{
                             String n = Msg.split(",")[0];
                             String t = Msg.split(",")[1];
@@ -193,20 +203,20 @@ public class TrainAgent extends Agent {
                             String sT = Msg.split(",")[3];
                             String sF = Msg.split(",")[4];
                             double v = Double.parseDouble(Msg.split(",")[5]);
+                            
+                                if(timeDiff(t,time)<=1200 && distance(c,coordinates)<200){
 
-                            if(timeDiff(t,time)<=1200 && distance(c,coordinates)<200){
-
-                                //headon
-                                if(stationTo.equals(sF)){
-                                    mt2.clearAllReceiver();
-                                    String str = "Headon Collision Detected";
-                                    mt2.setContent(str);
-                                    mt2.addReceiver(msg1.getSender());
-                                    send(mt2);
-                                }
-                                //rear
-                                else{
-                                }
+                                    //headon
+                                    if(stationTo.equals(sF)){
+                                        mt2.clearAllReceiver();
+                                        String str = "Headon Collision Detected";
+                                        mt2.setContent(str);
+                                        mt2.addReceiver(msg1.getSender());
+                                        send(mt2);
+                                    }
+                                    //rear
+                                    else{
+                                    }
                             }
                         }
                     }
