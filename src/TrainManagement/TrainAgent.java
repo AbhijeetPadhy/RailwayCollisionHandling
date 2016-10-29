@@ -60,7 +60,7 @@ public class TrainAgent extends Agent {
                 args = line.split(" ");
                 i++;
             }
-            System.out.println(line+"----Length="+args.length);
+            //System.out.println(line+"----Length="+args.length);
         }catch(IOException e){
             System.out.println("Train Agent cannot be created!! "+e);
         }
@@ -166,7 +166,7 @@ public class TrainAgent extends Agent {
                                         }
                                     }
                                     if (j == top+1) {
-                                        System.out.println(getAID().getLocalName()+": train added!!!!");
+                                        //System.out.println(getAID().getLocalName()+": train added!!!!");
                                         Name[++top] = list1;
                                         coll[top] = false;
                                     }
@@ -190,7 +190,8 @@ public class TrainAgent extends Agent {
                             String sender = msg1.getSender().getLocalName();
                             for(int i =0;i<=top;i++){
                                 if(sender.equals(Name[i]) && !coll[i]){
-                                    System.out.println(getAID().getLocalName()+" : "+Msg);
+                                    System.out.println(getAID().getLocalName()+": "+"Message received from train "+sender);
+                                    System.out.println('\t'+Msg);
                                     coll[i]=true;
                                     break;
                                 }
@@ -225,8 +226,9 @@ public class TrainAgent extends Agent {
                     mt2.clearAllReceiver();
                     String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
                     mt2.setContent(str);
-                    for(int i=0;i<=top;i++)
-                        mt2.addReceiver(new AID(Name[i],AID.ISLOCALNAME));  
+                    for(int i=0;i<=top;i++){
+                        mt2.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                    }
                     send(mt2);
                 }
             }

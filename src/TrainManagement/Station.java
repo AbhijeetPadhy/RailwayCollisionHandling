@@ -105,10 +105,10 @@ public class Station extends Agent {
                     System.out.println("\nStation "+getAID().getLocalName()+":");
                     System.out.println("Train\t\t:" +arr[0]);
                     System.out.println("Track\t\t:"+arr[1]);
-                    System.out.println("Direc\t\t:" +arr[2]);
-                    System.out.println("Time\t\t:" +arr[3]);
-                    System.out.println("Coordinates\t:"+arr[4]);
-                    System.out.println("Velocity \t:"+arr[5]);
+                    //System.out.println("Direc\t\t:" +arr[2]);
+                    //System.out.println("Time\t\t:" +arr[3]);
+                    //System.out.println("Coordinates\t:"+arr[4]);
+                    //System.out.println("Velocity \t:"+arr[5]);
                     System.out.println("Source \t\t:"+arr[6]);
                     System.out.println("Destination \t:"+arr[7]);
                     
