@@ -120,7 +120,17 @@ public class TrainAgent extends Agent {
                         //if the message sent by the station is about ListOfTrains
                         if(Msg.contains("ListOfTrains")){
                             System.out.println("I have got the list of trains!! "+Msg);
-                            
+                            String list[];
+                            list = Msg.split(":")[1].split(",");
+                            for(int i=0;i<list.length;i++){
+                                int j;
+                                for(j=0;j<=top;j++){
+                                    if(list[i].equals(Name[j]))
+                                        break;
+                                }
+                                if(j == top+1)
+                                    Name[++top] = list[i];
+                            }
                         }
                         
                         //if it is something else
