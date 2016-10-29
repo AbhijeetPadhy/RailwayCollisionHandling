@@ -195,6 +195,18 @@ public class Station extends Agent {
                     mt1.addReceiver(sen);
                     send(mt1);
                     
+                    //Broadcast no of trains to each train
+                    mt1.clearAllReceiver();
+                    String str="";
+                    for(int i=0;i<=top;i++){
+                        if(track[i] == Integer.parseInt(arr[1])){
+                            mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                            if(!Name[i].equals(arr[0]))
+                                 str=str+Name[i]+",";
+                        } 
+                    }
+                    send(mt1);
+                    
                     System.out.println("----------Collisions detected by stations: headon="+headon+" rear="+rear+" ----------");
                     
                 }else {
