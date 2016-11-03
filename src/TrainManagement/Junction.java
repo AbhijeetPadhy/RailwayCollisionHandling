@@ -21,6 +21,9 @@ public class Junction extends Agent {
         String time[] = new String[10];
         String trainCoordinates[] = new String[10];
         double velocity[] = new double[10];
+        String source[] = new String[10];
+        String dest[] = new String[10];
+        
         int top = -1;
         
         String coordinates;
@@ -89,6 +92,8 @@ public class Junction extends Agent {
                     time[top] = arr[3];
                     trainCoordinates[top] = arr[4];
                     velocity[top] = Double.parseDouble(arr[5]);
+                    source[top] = arr[6];
+                    dest[top] = arr[7];
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
