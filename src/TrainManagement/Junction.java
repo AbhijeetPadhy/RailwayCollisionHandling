@@ -206,7 +206,8 @@ public class Junction extends Agent {
                     mt1.setContent(str);
                     send(mt1);
                     
-                    System.out.println("----------Collisions detected by junctions: "+collisions+" ----------");
+                    readFromFile();
+                    System.out.println("----------Collisions detected by junction: headon="+headon+" rear="+rear+" ----------");
                     
                 }else {
                    // block();
