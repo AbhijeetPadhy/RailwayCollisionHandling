@@ -31,7 +31,6 @@ public class Junction extends Agent {
         
         String coordinates;
         
-        static int collisions=0;
         static int headon=0;
         static int rear=0;
         
@@ -187,7 +186,6 @@ public class Junction extends Agent {
                         } catch (IOException ex) {
                             Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        collisions++;
                     }
                     else
                         mt1.setContent("You are safe!!!");
