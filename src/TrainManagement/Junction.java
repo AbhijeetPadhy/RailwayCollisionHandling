@@ -11,6 +11,8 @@ import jade.lang.acl.MessageTemplate;
 import jade.core.AID;
 import TrainManagement.TrainAgent;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -127,18 +129,64 @@ public class Junction extends Agent {
                         double C1 = distance(trainCoordinates[top],coordinates)/velocity[top];
                         double C2 = distance(trainCoordinates[i],coordinates)/velocity[i];
                         double CDiff = C1-C2;
-                       
+                        
+                        //same track
                         if(track[i] == track[top] && Math.abs(TDiff)<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
-                            flag = true;
-                            mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                            //headon
+                            if(dir[i] != dir[top]){
+                                readFromFile();
+                                headon++;
+                                flag = true;
+                                mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                            }
+                            //rear
+                            else{
+                                int first=-1,second=-1;
+                                //approach
+                                if(dir[i] == 1){
+                                    if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
+                                        first = i;
+                                        second = top;
+                                    }
+                                    else{
+                                        first = top;
+                                        second = i;
+                                    }
+                                }
+                                //going away
+                                else{
+                                    if(distance(trainCoordinates[i],coordinates)<distance(trainCoordinates[top],coordinates)){
+                                        first = top;
+                                        second = i;
+                                    }
+                                    else{
+                                        first = i;
+                                        second = top;
+                                    }
+                                }
+                                if(velocity[first]<velocity[second]){
+                                    readFromFile();
+                                    rear++;
+                                    flag = true;
+                                    mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                                }
+                            }
                         }
+                        //different track
                         else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
+                            readFromFile();
+                            headon++;
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
                     }
                     if(flag){
                         mt1.setContent("You are going to collide!!!");
+                        try {
+                            writeToFile();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         collisions++;
                     }
                     else
