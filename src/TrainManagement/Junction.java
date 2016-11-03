@@ -67,10 +67,7 @@ public class Junction extends Agent {
                 
                 int diff = (aH-bH)*60*60 + (aM-bM)*60 + (aS-bS);
                 
-                if(diff>0)
-                    return diff;
-                else
-                    return diff*-1;
+                return diff;
             }
             
             void writeToFile() throws IOException{
