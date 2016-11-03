@@ -10,6 +10,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.core.AID;
 import TrainManagement.TrainAgent;
+import java.io.*;
 
 
 
@@ -29,6 +30,8 @@ public class Junction extends Agent {
         String coordinates;
         
         static int collisions=0;
+        static int headon=0;
+        static int rear=0;
         
     protected void setup() {
         Object[] args = getArguments();
@@ -65,6 +68,27 @@ public class Junction extends Agent {
                 int diff = (aH-bH)*60*60 + (aM-bM)*60 + (aS-bS);
                 
                 return diff;
+            }
+            
+            void writeToFile() throws IOException{
+                try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
+                    readFromFile();
+                    String str = "headon:"+headon+",rear:"+rear;
+                    fos.write(str.getBytes());
+                }
+            }
+            
+            void readFromFile(){
+                try{  
+                    InputStream fis=new FileInputStream("Result.txt");   
+                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                    String str;
+                    if((str= br.readLine())!=null){
+                        headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
+                        rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
+                        fis.close();
+                    }
+                }catch(Exception e){System.out.println(e);}  
             }
             
             @Override
