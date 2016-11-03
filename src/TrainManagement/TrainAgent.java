@@ -53,7 +53,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset4.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "dataset51.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -172,11 +172,12 @@ public class TrainAgent extends Agent {
                 
                 //if a message has been sent 
                 if(msg1!=null) {
-                    //if the message sent is by Station
-                    if(msg1.getSender().getLocalName().charAt(0) == 's'){
+                    //if the message sent is by Station/Junction
+                    if((msg1.getSender().getLocalName().charAt(0) == 's')||
+                            (msg1.getSender().getLocalName().charAt(0) == 'j')){
                         Msg=msg1.getContent();
                         
-                        //if the message sent by the station is about ListOfTrains
+                        //if the message sent by the station/junction is about ListOfTrains
                         if(Msg.contains("ListOfTrains")){
                             String list[];
                             if(Msg.split(":").length != 1){
@@ -204,7 +205,7 @@ public class TrainAgent extends Agent {
                         else{
                             //msg1.clearAllReceiver(); 
                             AID sen= msg1.getSender();
-                            System.out.println(getAID().getLocalName()+": Message received from station "+sen.getLocalName()+"\n\t"+Msg);
+                            System.out.println(getAID().getLocalName()+": Message received from "+sen.getLocalName()+"\n\t"+Msg);
                         }
                     }
                     
