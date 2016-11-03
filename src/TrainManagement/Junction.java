@@ -128,11 +128,11 @@ public class Junction extends Agent {
                         double C2 = distance(trainCoordinates[i],coordinates)/velocity[i];
                         double CDiff = C1-C2;
                        
-                        if(track[i] == track[top] && Math.abs(TDiff)<=1200 && distance(trainCoordinates[top],coordinates)<20 && distance(trainCoordinates[i],coordinates)<20){
+                        if(track[i] == track[top] && Math.abs(TDiff)<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
-                        else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<200 && distance(trainCoordinates[i],coordinates)<200){
+                        else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
