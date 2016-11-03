@@ -194,6 +194,18 @@ public class Junction extends Agent {
                     mt1.addReceiver(sen);
                     send(mt1);
                     
+                    //Broadcast no of trains to each train
+                    mt1.clearAllReceiver();
+                    String str="ListOfTrains:";
+                    for(int i=0;i<=top;i++){
+                        if(track[i] == Integer.parseInt(arr[1])){
+                            mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
+                                 str=str+Name[i]+",";
+                        } 
+                    }
+                    mt1.setContent(str);
+                    send(mt1);
+                    
                     System.out.println("----------Collisions detected by junctions: "+collisions+" ----------");
                     
                 }else {
