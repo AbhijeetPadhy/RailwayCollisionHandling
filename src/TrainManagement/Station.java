@@ -222,8 +222,8 @@ public class Station extends Agent {
                     mt1.setContent(str);
                     send(mt1);
                     
-                    readFromFile();
-                    System.out.println("----------Collisions detected by stations: headon="+headon+" rear="+rear+" ----------");
+                    //readFromFile();
+                    //System.out.println("----------Collisions detected by stations: headon="+headon+" rear="+rear+" ----------");
                     
                 }else {
                    // block();
