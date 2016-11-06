@@ -33,6 +33,7 @@ public class Station extends Agent {
         
         static int headon=0;
         static int rear=0;
+        int noOfMessages;
         
     protected void setup() {
         Object[] args = getArguments();
@@ -77,7 +78,7 @@ public class Station extends Agent {
             void writeToFile() throws IOException{
                 try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
                     readFromFile();
-                    String str = "headon:"+headon+",rear:"+rear;
+                    String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
             }
@@ -90,6 +91,7 @@ public class Station extends Agent {
                     if((str= br.readLine())!=null){
                         headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
                         rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
+                        noOfMessages = Integer.parseInt(str.split(",")[2].split(":")[1]); 
                         fis.close();
                     }
                 }catch(Exception e){System.out.println(e);}  
@@ -199,6 +201,7 @@ public class Station extends Agent {
                     }
                     if(flag){
                         mt1.setContent("You are going to collide!!!");
+                        noOfMessages++; 
                         try {
                             writeToFile();
                         } catch (IOException ex) {

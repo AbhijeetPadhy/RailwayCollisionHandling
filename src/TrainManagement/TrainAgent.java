@@ -39,6 +39,7 @@ public class TrainAgent extends Agent {
     
     int headon;
     int rear;
+    int noOfMessages;
     
     String Msg;
     Scanner in = new Scanner(System.in);
@@ -53,7 +54,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/dataset542.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/dataset30.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -147,7 +148,7 @@ public class TrainAgent extends Agent {
             void writeToFile() throws IOException{
                 try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
                     readFromFile();
-                    String str = "headon:"+headon+",rear:"+rear;
+                    String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
             }
@@ -160,6 +161,7 @@ public class TrainAgent extends Agent {
                     if((str= br.readLine())!=null){
                         headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
                         rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
+                        noOfMessages = Integer.parseInt(str.split(",")[2].split(":")[1]); 
                         fis.close();
                     }
                 }catch(Exception e){System.out.println(e);}  
@@ -250,6 +252,13 @@ public class TrainAgent extends Agent {
                                         mt2.setContent(str);
                                         mt2.addReceiver(msg1.getSender());
                                         send(mt2);
+                                        readFromFile();
+                                        noOfMessages++;
+                                        try {
+                                            writeToFile();
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                     }
                                     //rear
                                     else{
