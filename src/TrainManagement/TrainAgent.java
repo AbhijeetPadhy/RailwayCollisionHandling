@@ -37,9 +37,9 @@ public class TrainAgent extends Agent {
     double velocity;
     String path[];
     
-    int headon;
-    int rear;
-    int noOfMessages;
+    static int headon=0;
+    static int rear=0;
+    static int noOfMessages=0;
     
     String Msg;
     Scanner in = new Scanner(System.in);
@@ -146,26 +146,11 @@ public class TrainAgent extends Agent {
             }
             
             void writeToFile() throws IOException{
-                try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
-                    readFromFile();
+                try (FileOutputStream fos = new FileOutputStream("Result_Train.txt")) {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
-            }
-            
-            void readFromFile(){
-                try{  
-                    InputStream fis=new FileInputStream("Result.txt");   
-                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                    String str;
-                    if((str= br.readLine())!=null){
-                        headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
-                        rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
-                        noOfMessages = Integer.parseInt(str.split(",")[2].split(":")[1]); 
-                        fis.close();
-                    }
-                }catch(Exception e){System.out.println(e);}  
             }
             
             @Override
@@ -267,13 +252,11 @@ public class TrainAgent extends Agent {
                                     //headon
                                     if(stationTo.equals(sF)){
                                         str = "Headon Collision Detected";
-                                        readFromFile();
                                         headon++;
                                     }
                                     //rear
                                     else{
                                         str = "RearEnd Collision Detected";
-                                        readFromFile();
                                         rear++;
                                     }
                                     mt2.clearAllReceiver();

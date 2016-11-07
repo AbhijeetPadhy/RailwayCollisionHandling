@@ -33,7 +33,7 @@ public class Junction extends Agent {
         
         static int headon=0;
         static int rear=0;
-        int noOfMessages;
+        static int noOfMessages=0;
         
     protected void setup() {
         Object[] args = getArguments();
@@ -73,26 +73,11 @@ public class Junction extends Agent {
             }
             
             void writeToFile() throws IOException{
-                try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
-                    readFromFile();
+                try (FileOutputStream fos = new FileOutputStream("Result_Junction.txt")) {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
-            }
-            
-            void readFromFile(){
-                try{  
-                    InputStream fis=new FileInputStream("Result.txt");   
-                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                    String str;
-                    if((str= br.readLine())!=null){
-                        headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
-                        rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
-                        noOfMessages = Integer.parseInt(str.split(",")[2].split(":")[1]); 
-                        fis.close();
-                    }
-                }catch(Exception e){System.out.println(e);}  
             }
             
             @Override
@@ -136,7 +121,6 @@ public class Junction extends Agent {
                         if(track[i] == track[top] && Math.abs(TDiff)<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
                             //headon
                             if(dir[i] != dir[top]){
-                                readFromFile();
                                 headon++;
                                 flag = true;
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
@@ -167,7 +151,6 @@ public class Junction extends Agent {
                                     }
                                 }
                                 if(velocity[first]<velocity[second]){
-                                    readFromFile();
                                     rear++;
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
@@ -176,7 +159,6 @@ public class Junction extends Agent {
                         }
                         //different track
                         else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
-                            readFromFile();
                             headon++;
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
@@ -208,7 +190,6 @@ public class Junction extends Agent {
                     mt1.setContent(str);
                     send(mt1);
                     
-                    //readFromFile();
                     //System.out.println("----------Collisions detected by junction: headon="+headon+" rear="+rear+" ----------");
                     
                 }else {

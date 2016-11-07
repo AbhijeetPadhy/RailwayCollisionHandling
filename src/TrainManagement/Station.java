@@ -33,7 +33,7 @@ public class Station extends Agent {
         
         static int headon=0;
         static int rear=0;
-        int noOfMessages;
+        static int noOfMessages=0;
         
     protected void setup() {
         Object[] args = getArguments();
@@ -76,26 +76,11 @@ public class Station extends Agent {
             }
             
             void writeToFile() throws IOException{
-                try (FileOutputStream fos = new FileOutputStream("Result.txt")) {
-                    readFromFile();
+                try (FileOutputStream fos = new FileOutputStream("Result_Station.txt")) {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
-            }
-            
-            void readFromFile(){
-                try{  
-                    InputStream fis=new FileInputStream("Result.txt");   
-                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                    String str;
-                    if((str= br.readLine())!=null){
-                        headon = Integer.parseInt(str.split(",")[0].split(":")[1]);
-                        rear = Integer.parseInt(str.split(",")[1].split(":")[1]);
-                        noOfMessages = Integer.parseInt(str.split(",")[2].split(":")[1]); 
-                        fis.close();
-                    }
-                }catch(Exception e){System.out.println(e);}  
             }
             
             boolean isHeadOn(int a,int b){
@@ -146,7 +131,6 @@ public class Station extends Agent {
                             else if( isHeadOn(i,top) ){
                                 flag = true;
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
-                                readFromFile();
                                 headon++;
                             }
                             
@@ -194,7 +178,6 @@ public class Station extends Agent {
                                 if(first!=-1 && second!=-1 && velocity[first]<velocity[second]){
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
-                                    readFromFile();
                                     rear++;
                                 }
                             }
@@ -226,7 +209,6 @@ public class Station extends Agent {
                     mt1.setContent(str);
                     send(mt1);
                     
-                    //readFromFile();
                     //System.out.println("----------Collisions detected by stations: headon="+headon+" rear="+rear+" ----------");
                     
                 }else {
