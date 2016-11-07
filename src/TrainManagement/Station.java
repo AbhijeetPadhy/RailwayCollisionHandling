@@ -81,6 +81,7 @@ public class Station extends Agent {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
+                System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
             }
             
             void readFromFile(){

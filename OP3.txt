@@ -1,0 +1,596 @@
+run:
+Nov 07, 2016 9:22:04 PM jade.core.Runtime beginContainer
+INFO: ----------------------------------
+    This is JADE 4.4.0 - revision 6778 of 21-12-2015 12:24:43
+    downloaded in Open Source, under LGPL restrictions,
+    at http://jade.tilab.com/
+----------------------------------------
+Nov 07, 2016 9:22:04 PM jade.imtp.leap.LEAPIMTPManager initialize
+INFO: Listening for intra-platform commands on address:
+- jicp://192.168.1.123:1099
+
+Nov 07, 2016 9:22:04 PM jade.core.BaseService init
+INFO: Service jade.core.management.AgentManagement initialized
+Nov 07, 2016 9:22:04 PM jade.core.BaseService init
+INFO: Service jade.core.messaging.Messaging initialized
+Nov 07, 2016 9:22:04 PM jade.core.BaseService init
+INFO: Service jade.core.resource.ResourceManagement initialized
+Nov 07, 2016 9:22:04 PM jade.core.BaseService init
+INFO: Service jade.core.mobility.AgentMobility initialized
+Nov 07, 2016 9:22:04 PM jade.core.BaseService init
+INFO: Service jade.core.event.Notification initialized
+Nov 07, 2016 9:22:05 PM jade.mtp.http.HTTPServer <init>
+INFO: HTTP-MTP Using XML parser com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser
+Nov 07, 2016 9:22:05 PM jade.core.messaging.MessagingService boot
+INFO: MTP addresses:
+http://abhijeet-PC:7778/acc
+Nov 07, 2016 9:22:05 PM jade.core.AgentContainerImpl joinPlatform
+INFO: --------------------------------------
+Agent container Main-Container@192.168.1.123 is ready.
+--------------------------------------------
+Station s1 started at coordinates -10000:10000...
+Station s2 started at coordinates 5000:10000...
+Station s3 started at coordinates 15000:10000...
+Station s4 started at coordinates 0:0...
+Station s5 started at coordinates 10000:5000...
+Station s6 started at coordinates 0:15000...
+Station s7 started at coordinates -10000:0...
+Station s8 started at coordinates 15000:15000...
+Station s9 started at coordinates -5000:15000...
+Station s10 started at coordinates 0:-5000...
+Station j1 started at coordinates -5000:10000...
+Station j2 started at coordinates 0:10000...
+Station j3 started at coordinates 10000:10000...
+Station j4 started at coordinates 0:5000...
+junction j1 present at coordinates -5000:10000...
+junction j2 present at coordinates 0:10000...
+junction j3 present at coordinates 10000:10000...
+junction j4 present at coordinates 0:5000...
+junction j5 present at coordinates 10000:0...
+
+Station s9:
+Train		:12350
+Track		:1
+Source 		:s9
+
+Station s6:
+Train		:12350
+Track		:1
+Source 		:s9
+Destination 	:s6
+Destination 	:s6
+12350: Message received from s9
+	You are safe!!!
+12350: Message received from s6
+	You are safe!!!
+
+Station s6:
+Train		:12351
+Track		:1
+Source 		:s9
+Destination 	:s6
+
+Station s9:
+Train		:12351
+Track		:1
+Source 		:s9
+Destination 	:s6
+12351: Message received from s6
+	You are safe!!!
+400.0......500.0
+headon:0,rear:1,noOfMessages:1
+headon:0,rear:2,noOfMessages:2
+headon:0,rear:3,noOfMessages:3
+12350: Message received from train 12351
+	RearEnd Collision Detected
+12351: Message received from s9
+	You are going to collide!!!
+12351: Message received from train 12350
+	RearEnd Collision Detected
+12350: Message received from s9
+	You are going to collide!!!
+
+Station s9:
+Train		:12352
+Track		:1
+Source 		:s9
+Destination 	:s6
+
+Station s6:
+Train		:12352
+Track		:1
+Source 		:s9
+Destination 	:s6
+12352: Message received from s9
+	You are safe!!!
+12352: Message received from s6
+	You are safe!!!
+
+Station s6:
+Train		:12353
+Track		:1
+Source 		:s6
+Destination 	:s8
+
+Station s8:
+Train		:12353
+Track		:1
+Source 		:s6
+Destination 	:s8
+headon:0,rear:4,noOfMessages:4
+12353: Message received from s6
+	You are going to collide!!!
+12353: Message received from s8
+	You are safe!!!
+12352: Message received from s6
+	You are going to collide!!!
+
+Station s6:
+
+Station s8:
+Train		:12354
+Track		:2
+Source 		:s6
+Destination 	:s8
+Train		:12354
+Track		:2
+Source 		:s6
+Destination 	:s8
+12354: Message received from s8
+	You are safe!!!
+12354: Message received from s6
+	You are safe!!!
+
+Station s8:
+Train		:12355
+Track		:2
+Source 		:s6
+Destination 	:s8
+1107.880860020607......732.3933369440222
+headon:0,rear:5,noOfMessages:5
+12354: Message received from s8
+	You are going to collide!!!
+12355: Message received from s8
+	You are going to collide!!!
+
+Station s6:
+Train		:12355
+Track		:2
+Source 		:s6
+Destination 	:s8
+12355: Message received from s6
+	You are safe!!!
+
+Station s1:
+Train		:12356
+Track		:5
+Source 		:s1
+Destination 	:j1
+
+Junction j1:
+Train		:12356
+Track		:5
+Source 		:s1
+Destination 	:j1
+12356: Message received from s1
+	You are safe!!!
+12356: Message received from j1
+	You are safe!!!
+
+Junction j1:
+Train		:12357
+Track		:5
+Source 		:j1
+Destination 	:s1
+headon:1,rear:5,noOfMessages:6
+12356: Message received from j1
+	You are going to collide!!!
+12357: Message received from j1
+	You are going to collide!!!
+
+Station s1:
+Train		:12357
+Track		:5
+Source 		:j1
+Destination 	:s1
+12357: Message received from s1
+	You are safe!!!
+headon:1,rear:0,noOfMessages:1
+headon:1,rear:0,noOfMessages:1
+12356: Message received from train 12357
+	Headon Collision Detected
+12357: Message received from train 12356
+	Headon Collision Detected
+
+Junction j1:
+Train		:12358
+Track		:4
+Source 		:j1
+Destination 	:j2
+
+Junction j2:
+Train		:12358
+Track		:4
+Source 		:j1
+Destination 	:j2
+12358: Message received from j1
+	You are safe!!!
+12358: Message received from j2
+	You are safe!!!
+
+Station s2:
+Train		:12359
+Track		:8
+Source 		:s2
+Destination 	:j3
+
+Junction j3:
+Train		:12359
+Track		:8
+Source 		:s2
+Destination 	:j3
+12359: Message received from s2
+	You are safe!!!
+12359: Message received from j3
+	You are safe!!!
+
+Junction j4:
+Train		:12360
+Track		:7
+Source 		:j4
+Destination 	:j2
+
+Junction j2:
+Train		:12360
+Track		:7
+Source 		:j4
+Destination 	:j2
+12360: Message received from j4
+	You are safe!!!
+headon:2,rear:0,noOfMessages:2
+12360: Message received from j2
+	You are going to collide!!!
+12358: Message received from j2
+	You are going to collide!!!
+
+Station s5:
+
+Junction j3:
+Train		:12361
+Track		:9
+Source 		:s5
+Destination 	:j3
+headon:3,rear:0,noOfMessages:3
+12359: Message received from j3
+	You are going to collide!!!
+12361: Message received from j3
+	You are going to collide!!!
+Train		:12361
+Track		:9
+Source 		:s5
+Destination 	:j3
+12361: Message received from s5
+	You are safe!!!
+
+Station s3:
+Train		:12362
+Track		:10
+Source 		:j5
+Destination 	:s3
+
+Junction j5:
+Train		:12362
+Track		:10
+Source 		:j5
+Destination 	:s3
+12362: Message received from s3
+	You are safe!!!
+12362: Message received from j5
+	You are safe!!!
+
+Station s7:
+Train		:12363
+Track		:5
+Source 		:s7
+Destination 	:s1
+
+Station s1:
+Train		:12363
+Track		:5
+Source 		:s7
+Destination 	:s1
+12363: Message received from s1
+	You are safe!!!
+12363: Message received from s7
+	You are safe!!!
+
+Station s1:
+Train		:12364
+Track		:5
+Source 		:s7
+Destination 	:s1
+
+Station s7:
+Train		:12364
+Track		:5
+Source 		:s7
+Destination 	:s1
+12364: Message received from s7
+	You are safe!!!
+12364: Message received from s1
+	You are safe!!!
+12364: Message received from train 12363
+	RearEnd Collision Detected
+headon:3,rear:1,noOfMessages:4
+
+Station s7:
+Train		:12365
+Track		:6
+Source 		:s1
+Destination 	:s7
+
+Station s1:
+Train		:12365
+Track		:6
+Source 		:s1
+Destination 	:s7
+12365: Message received from s7
+	You are safe!!!
+12365: Message received from s1
+	You are safe!!!
+
+Station s1:
+Train		:12366
+Track		:6
+Source 		:s1
+Destination 	:s7
+12366: Message received from s1
+	You are safe!!!
+
+Station s7:
+Train		:12366
+Track		:6
+Source 		:s1
+Destination 	:s7
+headon:3,rear:2,noOfMessages:5
+600.0......500.0
+headon:3,rear:3,noOfMessages:6
+12365: Message received from train 12366
+	RearEnd Collision Detected
+12365: Message received from s7
+	You are going to collide!!!
+12366: Message received from s7
+	You are going to collide!!!
+
+Station s4:
+Train		:12367
+Track		:13
+Source 		:s4
+Destination 	:j4
+
+Junction j4:
+Train		:12367
+Track		:13
+Source 		:s4
+Destination 	:j4
+12367: Message received from s4
+	You are safe!!!
+12367: Message received from j4
+	You are safe!!!
+
+Junction j4:
+Train		:12368
+Track		:13
+Source 		:s4
+Destination 	:j4
+
+Station s4:
+Train		:12368
+Track		:13
+Source 		:s4
+Destination 	:j4
+12368: Message received from j4
+	You are safe!!!
+12368: Message received from s4
+	You are safe!!!
+headon:3,rear:4,noOfMessages:7
+12367: Message received from train 12368
+	RearEnd Collision Detected
+
+Junction j5:
+Train		:12369
+Track		:9
+Source 		:j5
+Destination 	:s5
+
+Station s5:
+12369: Message received from j5
+	You are safe!!!
+Train		:12369
+Track		:9
+Source 		:j5
+Destination 	:s5
+12369: Message received from s5
+	You are safe!!!
+
+Station s5:
+Train		:12370
+Track		:9
+Source 		:j5
+Destination 	:s5
+
+Junction j5:
+Train		:12370
+Track		:9
+Source 		:j5
+Destination 	:s5
+12370: Message received from s5
+	You are safe!!!
+headon:0,rear:1,noOfMessages:1
+headon:3,rear:5,noOfMessages:8
+12369: Message received from train 12370
+	RearEnd Collision Detected
+12369: Message received from j5
+	You are going to collide!!!
+12370: Message received from j5
+	You are going to collide!!!
+
+Junction j5:
+Train		:12371
+Track		:10
+Source 		:j5
+Destination 	:s3
+
+Station s3:
+Train		:12371
+Track		:10
+Source 		:j5
+Destination 	:s3
+12371: Message received from j5
+	You are safe!!!
+12371: Message received from s3
+	You are safe!!!
+
+Station s4:
+Train		:12372
+Track		:5
+Source 		:s7
+Destination 	:s4
+
+Station s7:
+Train		:12372
+Track		:5
+Source 		:s7
+Destination 	:s4
+12372: Message received from s4
+	You are safe!!!
+12372: Message received from s7
+	You are safe!!!
+
+Junction j5:
+Train		:12373
+Track		:5
+Source 		:j5
+Destination 	:s4
+
+Station s4:
+Train		:12373
+Track		:5
+Source 		:j5
+Destination 	:s4
+headon:1,rear:1,noOfMessages:2
+12372: Message received from s4
+	You are going to collide!!!
+12373: Message received from j5
+	You are safe!!!
+12373: Message received from s4
+	You are going to collide!!!
+
+Station s7:
+Train		:12374
+Track		:6
+Source 		:s10
+Destination 	:s7
+headon:2,rear:1,noOfMessages:3
+
+Station s10:
+Train		:12374
+Track		:6
+Source 		:s10
+Destination 	:s7
+12366: Message received from s7
+	You are going to collide!!!
+12365: Message received from s7
+	You are going to collide!!!
+12374: Message received from s7
+	You are going to collide!!!
+12374: Message received from s10
+	You are safe!!!
+
+Station s10:
+Train		:12375
+Track		:6
+Source 		:s10
+Destination 	:s7
+
+Station s7:
+Train		:12375
+Track		:6
+Source 		:s10
+Destination 	:s7
+12375: Message received from s7
+	You are safe!!!
+12375: Message received from s10
+	You are safe!!!
+
+Station s4:
+Train		:12376
+Track		:13
+Source 		:s4
+Destination 	:s10
+
+Station s10:
+Train		:12376
+Track		:13
+Source 		:s4
+Destination 	:s10
+12376: Message received from s4
+	You are safe!!!
+12376: Message received from s10
+	You are safe!!!
+
+Station s10:
+Train		:12377
+Track		:13
+Source 		:s10
+Destination 	:s4
+
+Station s4:
+Train		:12377
+Track		:13
+Source 		:s10
+Destination 	:s4
+12377: Message received from s10
+	You are safe!!!
+12377: Message received from s4
+	You are safe!!!
+
+Junction j5:
+Train		:12378
+Track		:17
+Source 		:j5
+Destination 	:s10
+
+Station s10:
+Train		:12378
+Track		:17
+Source 		:j5
+Destination 	:s10
+12378: Message received from j5
+	You are safe!!!
+12378: Message received from s10
+	You are safe!!!
+
+Junction j5:
+Train		:12379
+Track		:17
+Source 		:s10
+Destination 	:j5
+
+Station s10:
+Train		:12379
+Track		:17
+Source 		:s10
+Destination 	:j5
+12379: Message received from j5
+	You are safe!!!
+headon:3,rear:1,noOfMessages:4
+12378: Message received from train 12379
+	Headon Collision Detected
+headon:4,rear:1,noOfMessages:5
+12379: Message received from s10
+	You are safe!!!
+12379: Message received from train 12378
+	Headon Collision Detected
+BUILD STOPPED (total time: 8 minutes 47 seconds)
+

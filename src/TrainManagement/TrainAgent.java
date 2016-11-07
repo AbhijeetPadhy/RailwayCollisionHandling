@@ -54,7 +54,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/dataset30.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Dataset_OA.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -151,6 +151,7 @@ public class TrainAgent extends Agent {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
+                System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
             }
             
             void readFromFile(){
@@ -218,10 +219,11 @@ public class TrainAgent extends Agent {
                         if(Msg.split(",").length < 2){                          
                             String sender = msg1.getSender().getLocalName();
                             for(int i =0;i<=top;i++){
-                                if(sender.equals(Name[i]) && !coll[i]){
+                                if(sender.equals(Name[i])){
                                     System.out.println(getAID().getLocalName()+": "+"Message received from train "+sender);
                                     System.out.println('\t'+Msg);
                                     coll[i]=true;
+                                    /*
                                     if(Msg.contains("Headon")){
                                         readFromFile();
                                         headon++;
@@ -231,6 +233,16 @@ public class TrainAgent extends Agent {
                                             Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
                                         }
                                     }
+                                    else if(Msg.contains("RearEnd")){
+                                        readFromFile();
+                                        rear++;
+                                        try {
+                                            writeToFile();
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                    */
                                     break;
                                 }
                             }
@@ -243,30 +255,42 @@ public class TrainAgent extends Agent {
                             String sF = Msg.split(",")[4];
                             double v = Double.parseDouble(Msg.split(",")[5]);
                             
+                            int i;
+                            String sender = msg1.getSender().getLocalName();
+                            for(i =0;i<=top;i++){
+                                if(sender.equals(Name[i]))
+                                    break;
+                            }
+                            if(sender.equals(Name[i]) && !coll[i]){
                                 if(timeDiff(t,time)<=1200 && distance(c,coordinates)<200){
-
+                                    String str;
                                     //headon
                                     if(stationTo.equals(sF)){
-                                        mt2.clearAllReceiver();
-                                        String str = "Headon Collision Detected";
-                                        mt2.setContent(str);
-                                        mt2.addReceiver(msg1.getSender());
-                                        send(mt2);
+                                        str = "Headon Collision Detected";
                                         readFromFile();
-                                        noOfMessages++;
-                                        try {
-                                            writeToFile();
-                                        } catch (IOException ex) {
-                                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
+                                        headon++;
                                     }
                                     //rear
                                     else{
+                                        str = "RearEnd Collision Detected";
+                                        readFromFile();
+                                        rear++;
                                     }
+                                    mt2.clearAllReceiver();
+                                    mt2.setContent(str);
+                                    mt2.addReceiver(msg1.getSender());
+                                    send(mt2);
+                                    noOfMessages++;
+                                    coll[i] = true;
+                                    try {
+                                        writeToFile();
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }    
                             }
                         }
-                    }
-                    
+                    }                  
                 }else{
                     mt2.clearAllReceiver();
                     String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
