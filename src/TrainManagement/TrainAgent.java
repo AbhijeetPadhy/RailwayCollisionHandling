@@ -288,11 +288,13 @@ public class TrainAgent extends Agent {
                                     //headon
                                     if(stationTo.equals(sF)){
                                         str = "Headon Collision Detected";
+                                        addColl(Name[i],sender,"HEADON");
                                         headon++;
                                     }
                                     //rear
                                     else{
                                         str = "RearEnd Collision Detected";
+                                        addColl(Name[i],sender,"HEADON");
                                         rear++;
                                     }
                                     mt2.clearAllReceiver();
