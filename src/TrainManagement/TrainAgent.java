@@ -42,7 +42,9 @@ class Collision{
             solt1 = "STOP";
             solt2 = "STOP";
         }else{
-            
+            avoidance = true;
+            solt1 = "STOP";
+            solt2 = "STOP";
         }
     }
 }
@@ -191,11 +193,11 @@ public class TrainAgent extends Agent {
                         if (obj.avoidance){
                             str += "The collision can be avoided.\n";
                             str += "Train "+ obj.t1 +": "+obj.solt1+"\n";
-                            str += "Train "+ obj.t2 +": "+obj.solt2+"\n";
+                            str += "Train "+ obj.t2 +": "+obj.solt2+"\n\n";
                             ++a;
                         }
                         else{
-                            str += "The collision can not be avoided.\n";
+                            str += "The collision can not be avoided.\n\n";
                         }
                     }
                     str +="\n-----------------\n";
@@ -321,13 +323,13 @@ public class TrainAgent extends Agent {
                                     //headon
                                     if(stationTo.equals(sF)){
                                         str = "Headon Collision Detected";
-                                        addColl(Name[i],sender,"HEADON");
+                                        addColl(getAID().getLocalName(),sender,"HEADON");
                                         headon++;
                                     }
                                     //rear
                                     else{
                                         str = "RearEnd Collision Detected";
-                                        addColl(Name[i],sender,"HEADON");
+                                        addColl(getAID().getLocalName(),sender,"REAREND");
                                         rear++;
                                     }
                                     mt2.clearAllReceiver();
