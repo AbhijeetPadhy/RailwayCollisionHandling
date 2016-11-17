@@ -37,6 +37,13 @@ class Collision{
         t2 = b;
         type = d;
         reportedBy.add(c);
+        if(type.equals("HEADON")){
+            avoidance = true;
+            solt1 = "STOP";
+            solt2 = "STOP";
+        }else{
+            
+        }
     }
 }
 
