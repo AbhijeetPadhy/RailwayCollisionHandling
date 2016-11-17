@@ -125,7 +125,7 @@ public class Station extends Agent {
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
-                        if(track[i] == track[top] && timeDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],coordinates)<2000 && distance(trainCoordinates[i],coordinates)<2000){
+                        if(track[i] == track[top] && timeDiff(time[top],time[i])<=1200 && distance(trainCoordinates[top],coordinates)<1000 && distance(trainCoordinates[i],coordinates)<1000){
                             if(dir[i]==0 && dir[top]==0)
                                 ;
                             else if( isHeadOn(i,top) ){

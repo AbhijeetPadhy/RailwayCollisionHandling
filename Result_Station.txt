@@ -1,1 +1,1 @@
-headon:3,rear:4,noOfMessages:6
+headon:1,rear:3,noOfMessages:4
