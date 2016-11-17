@@ -19,8 +19,25 @@ import jade.core.behaviours.CyclicBehaviour;
 //import jade.core.behaviours.WakerBehaviour;
 import java.util.Scanner;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+class Collision{
+    String t1;
+    String t2;
+    String type;
+    String avoidance;
+    String solt1;
+    String solt2;
+    ArrayList <String> reportedBy = new ArrayList<>();
+    Collision(String a,String b,String c,String d){
+        t1 = a;
+        t2 = b;
+        type = d;
+        reportedBy.add(c);
+    }
+}
 
 public class TrainAgent extends Agent {
     
@@ -40,6 +57,7 @@ public class TrainAgent extends Agent {
     static int headon=0;
     static int rear=0;
     static int noOfMessages=0;
+    static ArrayList <Collision> detectedCollisions = new ArrayList<>();
     
     String Msg;
     Scanner in = new Scanner(System.in);
