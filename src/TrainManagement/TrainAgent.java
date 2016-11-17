@@ -20,6 +20,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import java.util.Scanner;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -169,6 +170,23 @@ public class TrainAgent extends Agent {
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
+            }
+            
+            void addColl(String a, String b, String c){
+                ListIterator<Collision> litr = detectedCollisions.listIterator();
+                boolean flag = false;
+                while(litr.hasNext()){
+                    Collision obj = litr.next();
+                    if((obj.t1.equals(a) && obj.t2.equals(b))||
+                        (obj.t2.equals(a) && obj.t1.equals(b))){
+                        flag = true;
+                        obj.reportedBy.add(getAID().getLocalName());
+                        break;
+                    }
+                }
+                if(flag == false){
+                    detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c));
+                }
             }
             
             @Override
