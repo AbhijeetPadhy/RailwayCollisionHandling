@@ -32,20 +32,15 @@ class Collision{
     String solt1;
     String solt2;
     ArrayList <String> reportedBy = new ArrayList<>();
-    Collision(String a,String b,String c,String d){
+    Collision(String a,String b,String c,String d, boolean e, String s1,String s2){
         t1 = a;
         t2 = b;
         type = d;
         reportedBy.add(c);
-        if(type.equals("HEADON")){
-            avoidance = true;
-            solt1 = "STOP";
-            solt2 = "STOP";
-        }else{
-            avoidance = true;
-            solt1 = "STOP";
-            solt2 = "STOP";
-        }
+
+        avoidance = e;
+        solt1 = s1;
+        solt2 = s2;
     }
 }
 
@@ -83,7 +78,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Dataset_OA.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Dataset_AP.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -209,7 +204,7 @@ public class TrainAgent extends Agent {
                 }
             }
             
-            void addColl(String a, String b, String c){
+            void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2){
                 ListIterator<Collision> litr = detectedCollisions.listIterator();
                 boolean flag = false;
                 while(litr.hasNext()){
@@ -222,7 +217,27 @@ public class TrainAgent extends Agent {
                     }
                 }
                 if(flag == false){
-                    detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c));
+                    //finding the index values of both the trains
+                    int i,j;
+                    for(i=0;i<=top;i++)
+                        if(Name[i].equals(a))
+                            break;
+                    for(j=0;j<=top;j++)
+                        if(Name[j].equals(a))
+                            break;
+                    
+                    double s1 = v1*v1/(2*r1);
+                    double s2 = v2*v2/(2*r2);
+                    //finding avoidance
+                    if(c.equals("HEADON")){
+                        if(distance(c1,c2)> s1+s2+20)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
+                    }
+                    else{
+                        
+                    }
                 }
             }
             
@@ -326,13 +341,13 @@ public class TrainAgent extends Agent {
                                     //headon
                                     if(stationTo.equals(sF)){
                                         str = "Headon Collision Detected";
-                                        addColl(getAID().getLocalName(),sender,"HEADON");
+                                        addColl(getAID().getLocalName(),sender,"HEADON",velocity,v,retard,r,coordinates,c);
                                         headon++;
                                     }
                                     //rear
                                     else{
                                         str = "RearEnd Collision Detected";
-                                        addColl(getAID().getLocalName(),sender,"REAREND");
+                                        addColl(getAID().getLocalName(),sender,"REAREND",velocity,v,retard,r,coordinates,c);
                                         rear++;
                                     }
                                     mt2.clearAllReceiver();

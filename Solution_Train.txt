@@ -1,7 +1,7 @@
 Collision no: 1
 Train 1: 12351
 Train 2: 12350
-Collision Type: REAREND
+Collision Type: HEADON
 The collision can be avoided.
 Train 12351: STOP
 Train 12350: STOP
