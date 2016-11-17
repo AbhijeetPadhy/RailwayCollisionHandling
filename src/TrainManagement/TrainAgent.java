@@ -62,6 +62,7 @@ public class TrainAgent extends Agent {
     String time;
     String coordinates;
     double velocity;
+    double retard;
     String path[];
     
     static int headon=0;
@@ -106,6 +107,7 @@ public class TrainAgent extends Agent {
         time = args[1];
         coordinates = args[3];
         velocity = Double.parseDouble(args[6]);
+        retard = Double.parseDouble(args[7]);
         path = args[8].substring(1,args[8].length()-1).split(",");
         
         int i;
@@ -310,6 +312,7 @@ public class TrainAgent extends Agent {
                             String sT = Msg.split(",")[3];
                             String sF = Msg.split(",")[4];
                             double v = Double.parseDouble(Msg.split(",")[5]);
+                            double r = Double.parseDouble(Msg.split(",")[6]);
                             
                             int i;
                             String sender = msg1.getSender().getLocalName();
@@ -349,7 +352,7 @@ public class TrainAgent extends Agent {
                     }                  
                 }else{
                     mt2.clearAllReceiver();
-                    String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity;
+                    String str = name+","+time+","+coordinates+","+stationTo+","+stationFrom+","+velocity+","+retard;
                     mt2.setContent(str);
                     for(int i=0;i<=top;i++){
                         if(coll[i] == false)
