@@ -1,4 +1,10 @@
+Collision no: 1
+Train 1: 12350
+Train 2: 12351
+Collision Type: REAREND
+The collision can not be avoided.
+
 
 -----------------
-Total no of collisions: 0
+Total no of collisions: 1
 Total no of avoidance: 0

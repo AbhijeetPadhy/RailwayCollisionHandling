@@ -238,7 +238,10 @@ public class TrainAgent extends Agent {
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
                     }
                     else{
-                        
+                        if(distance(c1,c2)-s2 > 20)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
                     }
                 }
             }
@@ -340,28 +343,40 @@ public class TrainAgent extends Agent {
                             if(sender.equals(Name[i]) && !coll[i]){
                                 if(timeDiff(t,time)<=1200 && distance(c,coordinates)<200){
                                     String str;
+                                    int collFlag=0;
                                     //headon
                                     if(stationTo.equals(sF)){
                                         str = "Headon Collision Detected";
                                         addColl(getAID().getLocalName(),sender,"HEADON",velocity,v,retard,r,coordinates,c);
                                         headon++;
+                                        collFlag=1;
                                     }
                                     //rear
                                     else{
+                                        int ch = (distance(stationToCoordinates,coordinates) < distance(stationToCoordinates,c))?0:1;
                                         str = "RearEnd Collision Detected";
-                                        addColl(getAID().getLocalName(),sender,"REAREND",velocity,v,retard,r,coordinates,c);
-                                        rear++;
+                                        if(ch == 0 && velocity<v){
+                                            addColl(getAID().getLocalName(),sender,"REAREND",velocity,v,retard,r,coordinates,c);
+                                            rear++;
+                                            collFlag=1;
+                                        }else if(ch == 1 && v<velocity){
+                                            addColl(sender,getAID().getLocalName(),"REAREND",v,velocity,r,retard,c,coordinates);
+                                            rear++;
+                                            collFlag=1;
+                                        }  
                                     }
-                                    mt2.clearAllReceiver();
-                                    mt2.setContent(str);
-                                    mt2.addReceiver(msg1.getSender());
-                                    send(mt2);
-                                    noOfMessages++;
-                                    coll[i] = true;
-                                    try {
-                                        writeToFile();
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                                    if(collFlag == 1){
+                                        mt2.clearAllReceiver();
+                                        mt2.setContent(str);
+                                        mt2.addReceiver(msg1.getSender());
+                                        send(mt2);
+                                        noOfMessages++;
+                                        coll[i] = true;
+                                        try {
+                                            writeToFile();
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                     }
                                 }    
                             }
