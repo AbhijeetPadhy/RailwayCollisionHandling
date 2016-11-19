@@ -60,6 +60,7 @@ public class TrainAgent extends Agent {
     double retard;
     String path[];
     String stationToCoordinates;
+    String stationFromCoordinates;
     
     static int headon=0;
     static int rear=0;
@@ -106,6 +107,7 @@ public class TrainAgent extends Agent {
         retard = Double.parseDouble(args[7]);
         path = args[8].substring(1,args[8].length()-1).split(",");
         stationToCoordinates = args[9];
+        stationFromCoordinates = args[10];
         
         int i;
         if(dir==1){
