@@ -59,6 +59,7 @@ public class TrainAgent extends Agent {
     double velocity;
     double retard;
     String path[];
+    String stationToCoordinates;
     
     static int headon=0;
     static int rear=0;
@@ -104,6 +105,7 @@ public class TrainAgent extends Agent {
         velocity = Double.parseDouble(args[6]);
         retard = Double.parseDouble(args[7]);
         path = args[8].substring(1,args[8].length()-1).split(",");
+        stationToCoordinates = args[9];
         
         int i;
         if(dir==1){
