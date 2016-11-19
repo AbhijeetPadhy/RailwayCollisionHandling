@@ -128,7 +128,7 @@ public class TrainAgent extends Agent {
         String abc;
         
         msg.clearAllReceiver();
-        abc = name+","+track+","+2+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo;
+        abc = name+","+track+","+2+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo+","+stationToCoordinates+","+stationFromCoordinates+","+","+retard;
         msg.setContent(abc);
         msg.addReceiver(new AID(stationFrom,AID.ISLOCALNAME));
         send(msg);
