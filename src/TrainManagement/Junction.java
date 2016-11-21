@@ -192,6 +192,7 @@ public class Junction extends Agent {
                                 }
                                 if(velocity[first]<velocity[second]){
                                     rear++;
+                                    addColl(Name[first],Name[second],"REAREND",velocity[first],velocity[second],retard[first],retard[second],trainCoordinates[first],trainCoordinates[second]);
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                 }
