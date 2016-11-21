@@ -202,16 +202,7 @@ public class TrainAgent extends Agent {
                         break;
                     }
                 }
-                if(flag == false){
-                    //finding the index values of both the trains
-                    int i,j;
-                    for(i=0;i<=top;i++)
-                        if(Name[i].equals(a))
-                            break;
-                    for(j=0;j<=top;j++)
-                        if(Name[j].equals(a))
-                            break;
-                    
+                if(flag == false){                    
                     double s1 = v1*v1/(2*r1);
                     double s2 = v2*v2/(2*r2);
                     //finding avoidance
