@@ -12,6 +12,7 @@ import jade.core.AID;
 import TrainManagement.TrainAgent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,6 +81,37 @@ public class Junction extends Agent {
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
+            }
+            
+            void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2){
+                ListIterator<Collision> litr = detectedCollisions.listIterator();
+                boolean flag = false;
+                while(litr.hasNext()){
+                    Collision obj = litr.next();
+                    if((obj.t1.equals(a) && obj.t2.equals(b))||
+                        (obj.t2.equals(a) && obj.t1.equals(b))){
+                        flag = true;
+                        obj.reportedBy.add(getAID().getLocalName());
+                        break;
+                    }
+                }
+                if(flag == false){                    
+                    double s1 = v1*v1/(2*r1);
+                    double s2 = v2*v2/(2*r2);
+                    //finding avoidance
+                    if(c.equals("HEADON")){
+                        if(distance(c1,c2)> s1+s2+20)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
+                    }
+                    else{
+                        if(distance(c1,c2)-s2 > 20)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
+                    }
+                }
             }
             
             @Override
