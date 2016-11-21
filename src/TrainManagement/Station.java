@@ -87,6 +87,32 @@ public class Station extends Agent {
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
+                
+                try (FileOutputStream fos = new FileOutputStream("Solution/Solution_Station.txt")) {
+                    String str = "";
+                    ListIterator<Collision> litr = detectedCollisions.listIterator();
+                    int i=0; int a=0;
+                    while(litr.hasNext()){
+                        Collision obj = litr.next();
+                        str += "Collision no: "+ ++i +"\n";
+                        str += "Train 1: "+ obj.t1+"\n";
+                        str += "Train 2: "+ obj.t2+"\n";
+                        str += "Collision Type: "+ obj.type+"\n";
+                        if (obj.avoidance){
+                            str += "The collision can be avoided.\n";
+                            str += "Train "+ obj.t1 +": "+obj.solt1+"\n";
+                            str += "Train "+ obj.t2 +": "+obj.solt2+"\n\n";
+                            ++a;
+                        }
+                        else{
+                            str += "The collision can not be avoided.\n\n";
+                        }
+                    }
+                    str +="\n-----------------\n";
+                    str += "Total no of collisions: "+i+"\n";
+                    str += "Total no of avoidance: "+a+"\n";
+                    fos.write(str.getBytes());
+                }
             }
             
             void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2){
