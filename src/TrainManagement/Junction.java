@@ -11,6 +11,7 @@ import jade.lang.acl.MessageTemplate;
 import jade.core.AID;
 import TrainManagement.TrainAgent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +35,7 @@ public class Junction extends Agent {
         static int headon=0;
         static int rear=0;
         static int noOfMessages=0;
+        static ArrayList <Collision> detectedCollisions = new ArrayList<>();
         
     protected void setup() {
         Object[] args = getArguments();
