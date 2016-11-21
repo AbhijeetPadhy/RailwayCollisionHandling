@@ -102,11 +102,14 @@ public class Junction extends Agent {
                     double s1 = v1*v1/(2*r1);
                     double s2 = v2*v2/(2*r2);
                     //finding avoidance
-                    if(c.equals("HEADON")){
+                    if(c.equals("HEADONsame")){
                         if(distance(c1,c2)> s1+s2+20)
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
                         else
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
+                    }
+                    else if(c.equals("HEADONdiff")){
+                        
                     }
                     else{
                         if(distance(c1,c2)-s2 > 20)
@@ -162,6 +165,7 @@ public class Junction extends Agent {
                             //headon
                             if(dir[i] != dir[top]){
                                 headon++;
+                                addColl(Name[top],Name[i],"HEADONsame",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i]);
                                 flag = true;
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                             }
@@ -201,6 +205,7 @@ public class Junction extends Agent {
                         //different track
                         else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<1000 && distance(trainCoordinates[i],coordinates)<1000){
                             headon++;
+                            addColl(Name[top],Name[i],"HEADONdiff",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i]);
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
