@@ -11,6 +11,8 @@ import jade.lang.acl.MessageTemplate;
 import jade.core.AID;
 import TrainManagement.TrainAgent;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +30,7 @@ public class Station extends Agent {
         String dest[] = new String[10];
         String stationToCoordinates[] = new String[10];
         String stationFromCoordinates[] = new String[10];
-        double reatard[] = new double[10];
+        double retard[] = new double[10];
         
         int top = -1;
         
@@ -37,6 +39,7 @@ public class Station extends Agent {
         static int headon=0;
         static int rear=0;
         static int noOfMessages=0;
+        static ArrayList <Collision> detectedCollisions = new ArrayList<>();
         
     protected void setup() {
         Object[] args = getArguments();
@@ -86,6 +89,37 @@ public class Station extends Agent {
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
             }
             
+            void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2){
+                ListIterator<Collision> litr = detectedCollisions.listIterator();
+                boolean flag = false;
+                while(litr.hasNext()){
+                    Collision obj = litr.next();
+                    if((obj.t1.equals(a) && obj.t2.equals(b))||
+                        (obj.t2.equals(a) && obj.t1.equals(b))){
+                        flag = true;
+                        obj.reportedBy.add(getAID().getLocalName());
+                        break;
+                    }
+                }
+                if(flag == false){                    
+                    double s1 = v1*v1/(2*r1);
+                    double s2 = v2*v2/(2*r2);
+                    //finding avoidance
+                    if(c.equals("HEADON")){
+                        if(distance(c1,c2)> s1+s2+20)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
+                    }
+                    else{
+                        if(distance(c1,c2)-s2 > 20)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
+                    }
+                }
+            }
+            
             boolean isHeadOn(int a,int b){
                 if((dir[a] == 0 && dir[b]!=0)||(dir[a] != 0 && dir[b]==0))
                     return true;
@@ -127,7 +161,7 @@ public class Station extends Agent {
                     dest[top] = arr[7];
                     stationToCoordinates[top] = arr[8];
                     stationFromCoordinates[top] = arr[9];
-                    reatard[top] = Double.parseDouble(arr[10]);
+                    retard[top] = Double.parseDouble(arr[10]);
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
@@ -138,6 +172,7 @@ public class Station extends Agent {
                                 flag = true;
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                 headon++;
+                                addColl(Name[top],Name[i],"HEADON",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i]);
                             }
                             
                             else{
@@ -185,6 +220,7 @@ public class Station extends Agent {
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                     rear++;
+                                    addColl(Name[first],Name[second],"HEADON",velocity[first],velocity[second],retard[first],retard[second],trainCoordinates[first],trainCoordinates[second]);
                                 }
                             }
                         }
