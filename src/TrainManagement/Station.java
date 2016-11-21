@@ -246,7 +246,7 @@ public class Station extends Agent {
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                     rear++;
-                                    addColl(Name[first],Name[second],"HEADON",velocity[first],velocity[second],retard[first],retard[second],trainCoordinates[first],trainCoordinates[second]);
+                                    addColl(Name[first],Name[second],"REAREND",velocity[first],velocity[second],retard[first],retard[second],trainCoordinates[first],trainCoordinates[second]);
                                 }
                             }
                         }
