@@ -31,6 +31,7 @@ public class Junction extends Agent {
         String stationToCoordinates[] = new String[10];
         String stationFromCoordinates[] = new String[10];
         double retard[] = new double[10];
+        int priority[] = new int[10];
         
         int top = -1;
         
@@ -152,6 +153,7 @@ public class Junction extends Agent {
                     stationToCoordinates[top] = arr[8];
                     stationFromCoordinates[top] = arr[9];
                     retard[top] = Double.parseDouble(arr[10]);
+                    priority[top] = Integer.parseInt(arr[11]);
                     
                     boolean flag = false;
                     for(int i=0;i<top;i++){
