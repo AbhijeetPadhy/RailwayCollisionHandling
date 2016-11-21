@@ -43,6 +43,7 @@ public class TrainAgent extends Agent {
     String path[];
     String stationToCoordinates;
     String stationFromCoordinates;
+    int priority;
     
     static int headon=0;
     static int rear=0;
@@ -90,6 +91,7 @@ public class TrainAgent extends Agent {
         path = args[8].substring(1,args[8].length()-1).split(",");
         stationToCoordinates = args[9];
         stationFromCoordinates = args[10];
+        priority = Integer.parseInt(args[11]);
         
         int i;
         if(dir==1){
@@ -110,13 +112,13 @@ public class TrainAgent extends Agent {
         String abc;
         
         msg.clearAllReceiver();
-        abc = name+","+track+","+2+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo+","+stationToCoordinates+","+stationFromCoordinates+","+retard;
+        abc = name+","+track+","+2+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo+","+stationToCoordinates+","+stationFromCoordinates+","+retard+","+priority;
         msg.setContent(abc);
         msg.addReceiver(new AID(stationFrom,AID.ISLOCALNAME));
         send(msg);
         
         msg.clearAllReceiver();
-        abc = name+","+track+","+1+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo+","+stationToCoordinates+","+stationFromCoordinates+","+retard;
+        abc = name+","+track+","+1+","+time+","+coordinates+","+velocity+","+stationFrom+","+stationTo+","+stationToCoordinates+","+stationFromCoordinates+","+retard+","+priority;
         msg.setContent(abc);
         msg.addReceiver(new AID(stationTo,AID.ISLOCALNAME));
         send(msg);
