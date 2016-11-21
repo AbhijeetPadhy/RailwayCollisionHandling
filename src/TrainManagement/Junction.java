@@ -87,7 +87,7 @@ public class Junction extends Agent {
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
             }
             
-            void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2){
+            void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2, int p1, int p2){
                 ListIterator<Collision> litr = detectedCollisions.listIterator();
                 boolean flag = false;
                 while(litr.hasNext()){
@@ -110,7 +110,18 @@ public class Junction extends Agent {
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
                     }
                     else if(c.equals("HEADONdiff")){
-                        
+                        if(distance(coordinates,c1)>s1 && distance(coordinates,c2)>s2){
+                            if(p1>p2)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                            else
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","MOVE"));
+                        }
+                        else if(distance(coordinates,c1)>s1)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","MOVE"));
+                        else if(distance(coordinates,c2)>s2)
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        else
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
                     }
                     else{
                         if(distance(c1,c2)-s2 > 20)
@@ -167,7 +178,7 @@ public class Junction extends Agent {
                             //headon
                             if(dir[i] != dir[top]){
                                 headon++;
-                                addColl(Name[top],Name[i],"HEADONsame",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i]);
+                                addColl(Name[top],Name[i],"HEADONsame",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i],priority[top],priority[i]);
                                 flag = true;
                                 mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                             }
@@ -198,7 +209,7 @@ public class Junction extends Agent {
                                 }
                                 if(velocity[first]<velocity[second]){
                                     rear++;
-                                    addColl(Name[first],Name[second],"REAREND",velocity[first],velocity[second],retard[first],retard[second],trainCoordinates[first],trainCoordinates[second]);
+                                    addColl(Name[first],Name[second],"REAREND",velocity[first],velocity[second],retard[first],retard[second],trainCoordinates[first],trainCoordinates[second],priority[top],priority[i]);
                                     flag = true;
                                     mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                                 }
@@ -207,7 +218,7 @@ public class Junction extends Agent {
                         //different track
                         else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<1000 && distance(trainCoordinates[i],coordinates)<1000){
                             headon++;
-                            addColl(Name[top],Name[i],"HEADONdiff",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i]);
+                            addColl(Name[top],Name[i],"HEADONdiff",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i],priority[top],priority[i]);
                             flag = true;
                             mt1.addReceiver(new AID(Name[i],AID.ISLOCALNAME));
                         }
