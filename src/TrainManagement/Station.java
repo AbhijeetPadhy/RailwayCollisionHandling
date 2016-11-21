@@ -79,7 +79,7 @@ public class Station extends Agent {
             }
             
             void writeToFile() throws IOException{
-                try (FileOutputStream fos = new FileOutputStream("Result_Station.txt")) {
+                try (FileOutputStream fos = new FileOutputStream("Result/Result_Station.txt")) {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }

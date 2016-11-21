@@ -73,7 +73,7 @@ public class Junction extends Agent {
             }
             
             void writeToFile() throws IOException{
-                try (FileOutputStream fos = new FileOutputStream("Result_Junction.txt")) {
+                try (FileOutputStream fos = new FileOutputStream("Result/Result_Junction.txt")) {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }

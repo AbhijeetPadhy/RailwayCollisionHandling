@@ -157,13 +157,13 @@ public class TrainAgent extends Agent {
             }
             
             void writeToFile() throws IOException{
-                try (FileOutputStream fos = new FileOutputStream("Result_Train.txt")) {
+                try (FileOutputStream fos = new FileOutputStream("Result/Result_Train.txt")) {
                     String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
                 
-                try (FileOutputStream fos = new FileOutputStream("Solution_Train.txt")) {
+                try (FileOutputStream fos = new FileOutputStream("Solution/Solution_Train.txt")) {
                     String str = "";
                     ListIterator<Collision> litr = detectedCollisions.listIterator();
                     int i=0; int a=0;
