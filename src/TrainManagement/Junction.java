@@ -85,6 +85,32 @@ public class Junction extends Agent {
                     fos.write(str.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
+                
+                try (FileOutputStream fos = new FileOutputStream("Solution/Solution_Junction.txt")) {
+                    String str = "";
+                    ListIterator<Collision> litr = detectedCollisions.listIterator();
+                    int i=0; int a=0;
+                    while(litr.hasNext()){
+                        Collision obj = litr.next();
+                        str += "Collision no: "+ ++i +"\n";
+                        str += "Train 1: "+ obj.t1+"\n";
+                        str += "Train 2: "+ obj.t2+"\n";
+                        str += "Collision Type: "+ obj.type+"\n";
+                        if (obj.avoidance){
+                            str += "The collision can be avoided.\n";
+                            str += "Train "+ obj.t1 +": "+obj.solt1+"\n";
+                            str += "Train "+ obj.t2 +": "+obj.solt2+"\n\n";
+                            ++a;
+                        }
+                        else{
+                            str += "The collision can not be avoided.\n\n";
+                        }
+                    }
+                    str +="\n-----------------\n";
+                    str += "Total no of collisions: "+i+"\n";
+                    str += "Total no of avoidance: "+a+"\n";
+                    fos.write(str.getBytes());
+                }
             }
             
             void addColl(String a, String b, String c, double v1, double v2, double r1, double r2, String c1, String c2, int p1, int p2){
@@ -105,23 +131,23 @@ public class Junction extends Agent {
                     //finding avoidance
                     if(c.equals("HEADONsame")){
                         if(distance(c1,c2)> s1+s2+20)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STOP","STOP"));
                         else
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",false,"",""));
                     }
                     else if(c.equals("HEADONdiff")){
                         if(distance(coordinates,c1)>s1 && distance(coordinates,c2)>s2){
-                            if(p1>p2)
-                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                            if(p1<p2)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"MOVE","STOP"));
                             else
-                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","MOVE"));
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STOP","MOVE"));
                         }
                         else if(distance(coordinates,c1)>s1)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","MOVE"));
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STOP","MOVE"));
                         else if(distance(coordinates,c2)>s2)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"MOVE","STOP"));
                         else
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
+                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",false,"STOP","STOP"));
                     }
                     else{
                         if(distance(c1,c2)-s2 > 20)
