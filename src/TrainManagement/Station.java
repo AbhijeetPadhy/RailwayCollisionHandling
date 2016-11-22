@@ -40,10 +40,34 @@ public class Station extends Agent {
         static int rear=0;
         static int noOfMessages=0;
         static ArrayList <Collision> detectedCollisions = new ArrayList<>();
+        static int count = 0;
         
     protected void setup() {
-        Object[] args = getArguments();
-        coordinates = args[0].toString();
+        //Object[] args = getArguments();
+        //coordinates = args[0].toString();
+        
+        String args[]=null;
+        
+        try{
+            File dir = new File(".");
+            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Station/StationFinal.txt");		
+            FileInputStream fis = new FileInputStream(fin);
+            //Construct BufferedReader from InputStreamReader
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            int i=0;
+            
+            while ((line = br.readLine()) != null && i<=count) {
+                args = line.split(" ");
+                i++;
+            }
+        }catch(IOException e){
+            System.out.println("Station Agent cannot be created!! "+e);
+        }
+        
+        coordinates = args[0];
+        count++;
+        
         System.out.println("Station "+getAID().getLocalName()+" started at coordinates "+coordinates+"...");
         
         addBehaviour(new CyclicBehaviour(this) {

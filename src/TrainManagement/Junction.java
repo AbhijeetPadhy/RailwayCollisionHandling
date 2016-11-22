@@ -41,11 +41,35 @@ public class Junction extends Agent {
         static int rear=0;
         static int noOfMessages=0;
         static ArrayList <Collision> detectedCollisions = new ArrayList<>();
+        static int count = 0;
         
     protected void setup() {
-        Object[] args = getArguments();
-        coordinates = args[0].toString();
-        System.out.println("junction "+getAID().getLocalName()+" present at coordinates "+coordinates+"...");
+        //Object[] args = getArguments();
+        //coordinates = args[0].toString();
+        
+        String args[]=null;
+        
+        try{
+            File dir = new File(".");
+            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Junction/JunctionFinal.txt");		
+            FileInputStream fis = new FileInputStream(fin);
+            //Construct BufferedReader from InputStreamReader
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            int i=0;
+            
+            while ((line = br.readLine()) != null && i<=count) {
+                args = line.split(" ");
+                i++;
+            }
+        }catch(IOException e){
+            System.out.println("Junction Agent cannot be created!! "+e);
+        }
+        
+        coordinates = args[0];
+        count++;
+        
+        System.out.println("Junction "+getAID().getLocalName()+" present at coordinates "+coordinates+"...");
         
         addBehaviour(new CyclicBehaviour(this) {
             MessageTemplate mt=MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
