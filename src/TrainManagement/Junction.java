@@ -130,8 +130,14 @@ public class Junction extends Agent {
                     double s2 = v2*v2/(2*r2);
                     //finding avoidance
                     if(c.equals("HEADONsame")){
-                        if(distance(c1,c2)> s1+s2+20)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STOP","STOP"));
+                        if(distance(c1,c2)> s1+s2+20){
+                            if(v1 == 0)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STANDING","STOP"));
+                            else if(v2 == 0)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STOP","STANDING"));
+                            else
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",true,"STOP","STOP"));
+                        }
                         else
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",false,"",""));
                     }
@@ -150,8 +156,12 @@ public class Junction extends Agent {
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",false,"STOP","STOP"));
                     }
                     else{
-                        if(distance(c1,c2)-s2 > 20)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        if(distance(c1,c2)-s2 > 20){
+                            if(v1 == 0)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STANDING","STOP"));
+                            else
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        }
                         else
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
                     }
@@ -195,10 +205,7 @@ public class Junction extends Agent {
                     boolean flag = false;
                     for(int i=0;i<top;i++){
                         double TDiff = timeDiff(time[top],time[i]);
-                        double C1 = distance(trainCoordinates[top],coordinates)/velocity[top];
-                        double C2 = distance(trainCoordinates[i],coordinates)/velocity[i];
-                        double CDiff = C1-C2;
-                        
+                                            
                         //same track
                         if(track[i] == track[top] && Math.abs(TDiff)<=1200 && distance(trainCoordinates[top],coordinates)<1000 && distance(trainCoordinates[i],coordinates)<1000){
                             //headon
@@ -242,7 +249,13 @@ public class Junction extends Agent {
                             }
                         }
                         //different track
-                        else if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<1000 && distance(trainCoordinates[i],coordinates)<1000){
+                        if(velocity[top] == 0 || velocity[i]==0)
+                            continue;
+                        double C1 = distance(trainCoordinates[top],coordinates)/velocity[top];
+                        double C2 = distance(trainCoordinates[i],coordinates)/velocity[i];
+                        double CDiff = C1-C2;
+                        
+                        if(track[i] != track[top] && dir[i]==1 && dir[top]==1 && Math.abs(TDiff + CDiff)<=1200 && distance(trainCoordinates[top],coordinates)<1000 && distance(trainCoordinates[i],coordinates)<1000){
                             headon++;
                             addColl(Name[top],Name[i],"HEADONdiff",velocity[top],velocity[i],retard[top],retard[i],trainCoordinates[top],trainCoordinates[i],priority[top],priority[i]);
                             flag = true;

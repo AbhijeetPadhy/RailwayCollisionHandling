@@ -132,14 +132,24 @@ public class Station extends Agent {
                     double s2 = v2*v2/(2*r2);
                     //finding avoidance
                     if(c.equals("HEADON")){
-                        if(distance(c1,c2)> s1+s2+20)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
+                        if(distance(c1,c2)> s1+s2+20){
+                            if(v1 == 0)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STANDING","STOP"));
+                            else if(v2 == 0)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STANDING"));
+                            else
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STOP","STOP"));
+                        }
                         else
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"",""));
                     }
                     else{
-                        if(distance(c1,c2)-s2 > 20)
-                            detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        if(distance(c1,c2)-s2 > 20){
+                            if(v1 == 0)
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STANDING","STOP"));
+                            else
+                                detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"MOVE","STOP"));
+                        }
                         else
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,false,"STOP","STOP"));
                     }
