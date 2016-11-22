@@ -1,1 +1,12 @@
-headon:1,rear:0,noOfMessages:1
+Collision no: 1
+Train 1: 12350
+Train 2: 12351
+Collision Type: REAREND
+
+-----------------
+Headon Detected: 0
+Rear End Detected: 1
+noOfMessages: 1
+Actual Headon: 0
+Actual Rear End: 1
+Toal Collisions: 1

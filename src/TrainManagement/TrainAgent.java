@@ -63,7 +63,7 @@ public class TrainAgent extends Agent {
         
         try{
             File dir = new File(".");
-            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Dataset_APP.txt");		
+            File fin = new File(dir.getCanonicalPath() + File.separator + "Dataset/Dataset_AP.txt");		
             FileInputStream fis = new FileInputStream(fin);
             //Construct BufferedReader from InputStreamReader
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -159,35 +159,57 @@ public class TrainAgent extends Agent {
             }
             
             void writeToFile() throws IOException{
+                String str = "";
+                String str2 = "";
+                int h = 0,r = 0;
+                ListIterator<Collision> litr = detectedCollisions.listIterator();
+                int i=0; int a=0;
+                while(litr.hasNext()){
+                    Collision obj = litr.next();
+                    str += "Collision no: "+ ++i +"\n";
+                    str += "Train 1: "+ obj.t1+"\n";
+                    str += "Train 2: "+ obj.t2+"\n";
+                    str += "Collision Type: "+ obj.type+"\n";
+                    
+                    str2 += "Collision no: "+ i +"\n";
+                    str2 += "Train 1: "+ obj.t1+"\n";
+                    str2 += "Train 2: "+ obj.t2+"\n";
+                    str2 += "Collision Type: "+ obj.type+"\n";
+                    
+                    if (obj.avoidance){
+                        str += "The collision can be avoided.\n";
+                        str += "Train "+ obj.t1 +": "+obj.solt1+"\n";
+                        str += "Train "+ obj.t2 +": "+obj.solt2+"\n\n";
+                        ++a;
+                    }
+                    else{
+                        str += "The collision can not be avoided.\n\n";
+                    }
+                    
+                    if(obj.type.equals("HEADON"))
+                        h++;
+                    else
+                        r++;
+                }
+                str +="\n-----------------\n";
+                str += "Total no of collisions: "+i+"\n";
+                str += "Total no of avoidance: "+a+"\n";
+                
+                str2 +="\n-----------------\n";
+                str2 +="Headon Detected: "+ headon+"\n";
+                str2 +="Rear End Detected: "+ rear+"\n";
+                str2 +="noOfMessages: "+ noOfMessages+"\n";
+                str2 +="Actual Headon: "+ h+"\n";
+                str2 +="Actual Rear End: "+ r+"\n";
+                str2 +="Toal Collisions: "+ (r+h)+"\n";
+                
                 try (FileOutputStream fos = new FileOutputStream("Result/Result_Train.txt")) {
-                    String str = "headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages;
-                    fos.write(str.getBytes());
+                    fos.write(str2.getBytes());
                 }
                 System.out.println("headon:"+headon+",rear:"+rear+",noOfMessages:"+noOfMessages);
                 
                 try (FileOutputStream fos = new FileOutputStream("Solution/Solution_Train.txt")) {
-                    String str = "";
-                    ListIterator<Collision> litr = detectedCollisions.listIterator();
-                    int i=0; int a=0;
-                    while(litr.hasNext()){
-                        Collision obj = litr.next();
-                        str += "Collision no: "+ ++i +"\n";
-                        str += "Train 1: "+ obj.t1+"\n";
-                        str += "Train 2: "+ obj.t2+"\n";
-                        str += "Collision Type: "+ obj.type+"\n";
-                        if (obj.avoidance){
-                            str += "The collision can be avoided.\n";
-                            str += "Train "+ obj.t1 +": "+obj.solt1+"\n";
-                            str += "Train "+ obj.t2 +": "+obj.solt2+"\n\n";
-                            ++a;
-                        }
-                        else{
-                            str += "The collision can not be avoided.\n\n";
-                        }
-                    }
-                    str +="\n-----------------\n";
-                    str += "Total no of collisions: "+i+"\n";
-                    str += "Total no of avoidance: "+a+"\n";
+                    
                     fos.write(str.getBytes());
                 }
             }
