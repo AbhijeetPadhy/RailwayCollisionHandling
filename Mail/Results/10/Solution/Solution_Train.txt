@@ -1,0 +1,18 @@
+Collision no: 1
+Train 1: 12351
+Train 2: 12350
+Collision Type: REAREND
+The collision can be avoided.
+Train 12351: MOVE
+Train 12350: STOP
+
+Collision no: 2
+Train 1: 12357
+Train 2: 12356
+Collision Type: HEADON
+The collision can not be avoided.
+
+
+-----------------
+Total no of collisions: 2
+Total no of avoidance: 1

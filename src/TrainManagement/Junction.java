@@ -119,7 +119,7 @@ public class Junction extends Agent {
                     str2 += "Collision no: "+ i +"\n";
                     str2 += "Train 1: "+ obj.t1+"\n";
                     str2 += "Train 2: "+ obj.t2+"\n";
-                    str2 += "Collision Type: "+ obj.type+"\n";
+                    str2 += "Collision Type: "+ obj.type+"\n\n";
                     
                     if (obj.avoidance){
                         str += "The collision can be avoided.\n";
@@ -202,7 +202,9 @@ public class Junction extends Agent {
                             detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),"HEADON",false,"STOP","STOP"));
                     }
                     else{
-                        if(distance(c1,c2)-s2 > 20){
+                        double t = v2/r2;
+                        s1 = v1*t;
+                        if(distance(c1,c2)-s2+s1 > 20){
                             if(v1 == 0)
                                 detectedCollisions.add(new Collision(a,b,getAID().getLocalName(),c,true,"STANDING","STOP"));
                             else

@@ -2,27 +2,25 @@ Collision no: 1
 Train 1: 12357
 Train 2: 12356
 Collision Type: HEADON
+The collision can not be avoided.
 
 Collision no: 2
 Train 1: 12360
 Train 2: 12358
 Collision Type: HEADON
+The collision can be avoided.
+Train 12360: STOP
+Train 12358: MOVE
 
 Collision no: 3
 Train 1: 12361
 Train 2: 12359
 Collision Type: HEADON
-
-Collision no: 4
-Train 1: 12369
-Train 2: 12370
-Collision Type: REAREND
+The collision can be avoided.
+Train 12361: STOP
+Train 12359: MOVE
 
 
 -----------------
-Headon Detected: 3
-Rear End Detected: 1
-noOfMessages: 4
-Actual Headon: 3
-Actual Rear End: 1
-Toal Collisions: 4
+Total no of collisions: 3
+Total no of avoidance: 2

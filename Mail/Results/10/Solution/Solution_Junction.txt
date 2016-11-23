@@ -1,0 +1,10 @@
+Collision no: 1
+Train 1: 12357
+Train 2: 12356
+Collision Type: HEADON
+The collision can not be avoided.
+
+
+-----------------
+Total no of collisions: 1
+Total no of avoidance: 0

@@ -14,21 +14,7 @@ The collision can be avoided.
 Train 12353: MOVE
 Train 12352: STOP
 
-Collision no: 3
-Train 1: 12366
-Train 2: 12365
-Collision Type: HEADON
-The collision can not be avoided.
-
-Collision no: 4
-Train 1: 12373
-Train 2: 12372
-Collision Type: HEADON
-The collision can be avoided.
-Train 12373: STOP
-Train 12372: STOP
-
 
 -----------------
-Total no of collisions: 4
-Total no of avoidance: 3
+Total no of collisions: 2
+Total no of avoidance: 2

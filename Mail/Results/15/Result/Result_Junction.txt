@@ -13,16 +13,11 @@ Train 1: 12361
 Train 2: 12359
 Collision Type: HEADON
 
-Collision no: 4
-Train 1: 12369
-Train 2: 12370
-Collision Type: REAREND
-
 
 -----------------
 Headon Detected: 3
-Rear End Detected: 1
-noOfMessages: 4
+Rear End Detected: 0
+noOfMessages: 3
 Actual Headon: 3
-Actual Rear End: 1
-Toal Collisions: 4
+Actual Rear End: 0
+Toal Collisions: 3

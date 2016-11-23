@@ -4,18 +4,18 @@ Train 2: 12350
 Collision Type: REAREND
 
 Collision no: 2
-Train 1: 12353
-Train 2: 12352
-Collision Type: REAREND
-
-Collision no: 3
-Train 1: 12366
-Train 2: 12365
+Train 1: 12357
+Train 2: 12356
 Collision Type: HEADON
 
+Collision no: 3
+Train 1: 12363
+Train 2: 12364
+Collision Type: REAREND
+
 Collision no: 4
-Train 1: 12373
-Train 2: 12372
+Train 1: 12365
+Train 2: 12366
 Collision Type: HEADON
 
 
