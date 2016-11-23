@@ -25,6 +25,6 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-+ Abhijeet Padhy
- * abhijeet.padhy@gmail.com
+* Abhijeet Padhy
+  abhijeet.padhy@gmail.com
 * Bhawana Mishra
